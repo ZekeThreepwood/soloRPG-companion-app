@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+
+# Frontend build output
+dist/
+build/
+.vite/
+
+# Tauri / Rust build output
+src-tauri/target/
+target/
+
+# Tauri generated files / bundles
+src-tauri/gen/
+src-tauri/bundle/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# IDEs / editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+
+# Python leftovers
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Test / coverage output
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+.cache/
+
+# Local-only config / experiments
+*.local
