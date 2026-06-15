@@ -1,0 +1,260 @@
+.sceneForm {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sceneFormTopBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 20px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    margin-bottom: 24px;
+    flex-shrink: 0;
+}
+
+.sceneFormHeading {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #f9fafb;
+}
+
+.sceneFormTopActions {
+    display: flex;
+    gap: 10px;
+}
+
+.sceneFormBtnPrimary {
+    padding: 8px 20px;
+    background: #2563eb;
+    border: 1px solid #3b82f6;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.sceneFormBtnPrimary:hover {
+    background: #1d4ed8;
+}
+
+.sceneFormBtnSecondary {
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 8px;
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.sceneFormBtnSecondary:hover {
+    border-color: #9ca3af;
+    color: #f9fafb;
+}
+
+.sceneFormBody {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.sceneFormSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.sceneFormRow {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.sceneFormGroupGrow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.sceneFormGroupTemplate {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.sceneFormGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sceneFormFlagsRow {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.sceneFieldLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.sceneFieldRequired {
+    color: #f87171;
+    margin-left: 2px;
+}
+
+.sceneFieldInput {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.sceneFieldInput:focus {
+    border-color: #93c5fd;
+}
+
+.sceneFieldInput::placeholder {
+    color: #374151;
+}
+
+.sceneFieldInputMono {
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 13px;
+}
+
+.sceneFieldInputAsset {
+    flex: 1;
+    min-width: 260px;
+}
+
+.sceneFieldInputError {
+    border-color: #f87171 !important;
+}
+
+.sceneFieldErrorMsg {
+    font-size: 12px;
+    color: #f87171;
+    margin-top: 2px;
+}
+
+.sceneFieldSelect {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    appearance: none;
+}
+
+.sceneFieldSelect:focus {
+    border-color: #93c5fd;
+}
+
+.sceneFieldTextarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 15px;
+    font-family: inherit;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s;
+    min-height: 140px;
+}
+
+.sceneFieldTextarea:focus {
+    border-color: #93c5fd;
+}
+
+.sceneFieldTextarea::placeholder {
+    color: #374151;
+}
+
+.sceneCheckLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #9ca3af;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.sceneCheckLabel input[type="checkbox"] {
+    accent-color: #93c5fd;
+    width: 14px;
+    height: 14px;
+}
+
+.sceneFormSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sceneFormBtnAdd {
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px dashed rgba(147, 197, 253, 0.4);
+    border-radius: 8px;
+    color: #93c5fd;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.sceneFormBtnAdd:hover {
+    border-style: solid;
+    background: rgba(147, 197, 253, 0.06);
+}
+
+.sceneNoChoicesHint {
+    margin: 0;
+    color: #4b5563;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.sceneChoiceList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

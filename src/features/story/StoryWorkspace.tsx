@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { BackButton } from "../../components/ui/BackButton";
 import { SideTabButton } from "../../components/ui/SideTabButton";
+import { ScenesPanel } from "./scenes/ScenesPanel";
 import "./StoryWorkspace.css";
 
 type StoryWorkspaceProps = {
@@ -75,16 +76,7 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                 </header>
 
                 <div className="workspacePanel">
-                    {activeMode === "scenes" && (
-                        <>
-                            <h2>Scenes</h2>
-                            <p>
-                                This section will be the main story scene editor. It will let
-                                you create scenes, write scene text, assign templates, choose
-                                assets, and define player choices.
-                            </p>
-                        </>
-                    )}
+                    {activeMode === "scenes" && <ScenesPanel />}
 
                     {activeMode === "structure" && (
                         <>
