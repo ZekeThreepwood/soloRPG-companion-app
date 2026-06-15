@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { LogicalSize } from "@tauri-apps/api/dpi";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import soloRpgLogo from "../../assets/branding/asset_main_logo_full.png";
@@ -11,20 +11,26 @@ type LandingPageProps = {
 };
 
 export function LandingPage({ onNewStory, onLoadStory }: LandingPageProps) {
-    useEffect(() => {
-        async function restoreLandingWindowSize() {
-            try {
-                const currentWindow = getCurrentWindow();
+    const didResize = useRef(false);
 
-                await currentWindow.unmaximize();
-                await currentWindow.setSize(new LogicalSize(800, 600));
-                await currentWindow.center();
+    useEffect(() => {
+        if (didResize.current) return;
+        didResize.current = true;
+
+        async function restoreWindow() {
+            try {
+                const win = getCurrentWindow();
+                await win.hide();
+                await win.unmaximize();
+                await win.setSize(new LogicalSize(800, 600));
+                await win.center();
+                await win.show();
             } catch (error) {
                 console.error("Failed to restore landing window size:", error);
             }
         }
 
-        restoreLandingWindowSize();
+        restoreWindow();
     }, []);
 
     return (

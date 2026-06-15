@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { BackButton } from "../../components/ui/BackButton";
 import { SideTabButton } from "../../components/ui/SideTabButton";
@@ -25,18 +25,29 @@ const STORY_MODES: Array<{
 
 export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
     const [activeMode, setActiveMode] = useState<StoryMode>("scenes");
+    const didResize = useRef(false);
 
     useEffect(() => {
-        async function maximizeWindow() {
+        if (didResize.current) return;
+        didResize.current = true;
+
+        async function expandWindow() {
             try {
-                const currentWindow = getCurrentWindow();
-                await currentWindow.maximize();
+                const win = getCurrentWindow();
+                await win.hide();
+                await win.setResizable(true);
+                const alreadyMaximized = await win.isMaximized();
+                if (!alreadyMaximized) {
+                    await win.maximize();
+                }
+                await win.show();
+                await win.setFocus();
             } catch (error) {
-                console.error("Failed to maximize app window:", error);
+                console.error("Failed to expand window:", error);
             }
         }
 
-        maximizeWindow();
+        expandWindow();
     }, []);
 
     return (
