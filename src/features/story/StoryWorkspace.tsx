@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { BackButton } from "../../components/ui/BackButton";
 import { SideTabButton } from "../../components/ui/SideTabButton";
+import { StructurePanel } from "./structure/StructurePanel";
 import { ScenesPanel } from "./scenes/ScenesPanel";
 import { ItemsPanel } from "./items/ItemsPanel";
+import { QuestsPanel } from "./items/QuestsPanel";
 import { useStoryStore } from "../../app/storyStore";
 import { useAutoSave } from "../../app/useAutoSave";
 import { saveProject } from "../../app/saveLoad";
@@ -13,24 +15,23 @@ type StoryWorkspaceProps = {
     onBackToLanding: () => void;
 };
 
-type StoryMode = "scenes" | "structure" | "items" | "assets";
+type StoryMode = "structure" | "scenes" | "items" | "quests" | "assets" | "templates";
 
 type SideTabSize = "small" | "medium" | "long";
 
-const STORY_MODES: Array<{
-    id: StoryMode;
-    label: string;
-    tabSize: SideTabSize;
-}> = [
-        { id: "scenes", label: "Scenes", tabSize: "small" },
-        { id: "structure", label: "Structure", tabSize: "medium" },
-        { id: "items", label: "Items", tabSize: "small" },
-        { id: "assets", label: "Assets", tabSize: "small" },
-    ];
+const STORY_MODES: Array<{ id: StoryMode; label: string; tabSize: SideTabSize }> = [
+    { id: "structure", label: "Structure", tabSize: "medium" },
+    { id: "scenes",    label: "Scenes",    tabSize: "small"  },
+    { id: "items",     label: "Items",     tabSize: "small"  },
+    { id: "quests",    label: "Quests",    tabSize: "small"  },
+    { id: "assets",    label: "Assets",    tabSize: "small"  },
+    { id: "templates", label: "Templates", tabSize: "medium" },
+];
 
 export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
-    const [activeMode, setActiveMode] = useState<StoryMode>("scenes");
+    const [activeMode, setActiveMode] = useState<StoryMode>("structure");
     const [isSaving, setIsSaving] = useState(false);
+    const [editingSceneId, setEditingSceneId] = useState<string | null>(null);
     const didResize = useRef(false);
 
     const storyTitle = useStoryStore((s) => s.storyTitle);
@@ -48,9 +49,7 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                 await win.hide();
                 await win.setResizable(true);
                 const alreadyMaximized = await win.isMaximized();
-                if (!alreadyMaximized) {
-                    await win.maximize();
-                }
+                if (!alreadyMaximized) await win.maximize();
                 await win.show();
                 await win.setFocus();
             } catch (error) {
@@ -60,6 +59,11 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
 
         expandWindow();
     }, []);
+
+    function handleEditScene(id: string) {
+        setEditingSceneId(id);
+        setActiveMode("scenes");
+    }
 
     async function handleSave() {
         setIsSaving(true);
@@ -71,7 +75,6 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
         <main className="workspacePage">
             <aside className="workspaceSidebar">
                 <BackButton onClick={onBackToLanding} />
-
                 <nav className="sideTabs" aria-label="Story editor modes">
                     {STORY_MODES.map((mode) => (
                         <SideTabButton
@@ -107,20 +110,20 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                 </header>
 
                 <div className="workspacePanel">
-                    {activeMode === "scenes" && <ScenesPanel />}
-
                     {activeMode === "structure" && (
-                        <>
-                            <h2>Structure</h2>
-                            <p>
-                                This section will handle the high-level flow of the story. It
-                                will later become the place for branch organization, scene graph
-                                structure, entry flow, and overall navigation logic.
-                            </p>
-                        </>
+                        <StructurePanel onEditScene={handleEditScene} />
+                    )}
+
+                    {activeMode === "scenes" && (
+                        <ScenesPanel
+                            openEditId={editingSceneId}
+                            onClearOpenEdit={() => setEditingSceneId(null)}
+                        />
                     )}
 
                     {activeMode === "items" && <ItemsPanel />}
+
+                    {activeMode === "quests" && <QuestsPanel />}
 
                     {activeMode === "assets" && (
                         <>
@@ -128,6 +131,17 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                             <p>
                                 This section will manage story images and other imported
                                 campaign assets, and map them to the campaign package structure.
+                            </p>
+                        </>
+                    )}
+
+                    {activeMode === "templates" && (
+                        <>
+                            <h2>Templates</h2>
+                            <p>
+                                Templates will let you define reusable scene and choice patterns —
+                                common encounter structures, NPC dialogue frames, and branching
+                                blueprints you can drop into any story. Coming in a future release.
                             </p>
                         </>
                     )}
@@ -139,13 +153,11 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
 
 function getModeTitle(mode: StoryMode): string {
     switch (mode) {
-        case "scenes":
-            return "Scenes";
-        case "structure":
-            return "Structure";
-        case "items":
-            return "Items";
-        case "assets":
-            return "Assets";
+        case "structure":  return "Structure";
+        case "scenes":     return "Scenes";
+        case "items":      return "Items";
+        case "quests":     return "Quests";
+        case "assets":     return "Assets";
+        case "templates":  return "Templates";
     }
 }

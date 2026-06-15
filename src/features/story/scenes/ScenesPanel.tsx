@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStoryStore } from "../../../app/storyStore";
 import { SceneForm } from "./SceneForm";
 import type { Scene } from "../../../types/story";
@@ -6,9 +6,21 @@ import "./ScenesPanel.css";
 
 type View = "list" | "create" | "edit";
 
-export function ScenesPanel() {
+type ScenesPanelProps = {
+    openEditId?: string | null;
+    onClearOpenEdit?: () => void;
+};
+
+export function ScenesPanel({ openEditId, onClearOpenEdit }: ScenesPanelProps = {}) {
     const [view, setView] = useState<View>("list");
     const [editingId, setEditingId] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!openEditId) return;
+        setEditingId(openEditId);
+        setView("edit");
+        onClearOpenEdit?.();
+    }, [openEditId, onClearOpenEdit]);
 
     const scenes = useStoryStore((s) => s.scenes);
     const startScene = useStoryStore((s) => s.startScene);

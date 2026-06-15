@@ -22,6 +22,8 @@ type StoryStore = {
     replaceScene: (oldId: string, scene: Scene) => void;
     deleteScene: (id: string) => void;
     setStartScene: (id: string) => void;
+    addChoiceToScene: (sceneId: string, choice: import("../types/story").Choice) => void;
+    removeChoiceFromScene: (sceneId: string, choiceKey: string) => void;
     addItem: (item: Item) => void;
     replaceItem: (oldId: string, item: Item) => void;
     deleteItem: (id: string) => void;
@@ -92,6 +94,24 @@ export const useStoryStore = create<StoryStore>((set) => ({
         })),
 
     setStartScene: (id) => set({ startScene: id, isDirty: true }),
+
+    addChoiceToScene: (sceneId, choice) =>
+        set((state) => ({
+            scenes: state.scenes.map((s) =>
+                s.id === sceneId ? { ...s, choices: [...s.choices, choice] } : s
+            ),
+            isDirty: true,
+        })),
+
+    removeChoiceFromScene: (sceneId, choiceKey) =>
+        set((state) => ({
+            scenes: state.scenes.map((s) =>
+                s.id === sceneId
+                    ? { ...s, choices: s.choices.filter((c) => c._key !== choiceKey) }
+                    : s
+            ),
+            isDirty: true,
+        })),
 
     addItem: (item) =>
         set((state) => ({ items: [...state.items, item], isDirty: true })),
