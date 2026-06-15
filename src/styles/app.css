@@ -131,6 +131,7 @@ button {
 
 .workspaceSidebar {
     height: 100vh;
+    width: 45px;
     padding: 10px 5px;
     border-right: 1px solid rgba(148, 163, 184, 0.24);
     background: rgba(15, 23, 42, 0.72);
@@ -142,6 +143,7 @@ button {
 
 .backAssetButton {
     position: relative;
+    top: -40px;
     width: 108px;
     border: 0;
     padding: 0;
@@ -151,9 +153,11 @@ button {
     display: block;
     line-height: 0;
     user-select: none;
+    scale: 0.5;
 }
 
 .backAssetButtonImage {
+    position: relative;
     display: block;
     width: 100%;
     height: auto;
@@ -161,25 +165,14 @@ button {
     user-select: none;
 }
 
-.backAssetButtonText {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #f9fafb;
-    font-size: 12px;
-    font-weight: 900;
-    pointer-events: none;
-    user-select: none;
-}
-
 .sideTabs {
-    width: 108px;
+    position: relative;
+    top: -130px;
+    width: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 0px;
     padding-top: 0;
 }
 
@@ -197,6 +190,10 @@ button {
     transition: transform 0.12s ease, opacity 0.12s ease;
 }
 
+.sideTabButton+.sideTabButton {
+    margin-top: -77px;
+}
+
 .sideTabButton:hover {
     opacity: 1;
     transform: translateX(2px);
@@ -209,7 +206,7 @@ button {
 }
 
 .sideTabButton-small {
-    width: 88px;
+    width: 108px;
 }
 
 .sideTabButton-long {
@@ -252,9 +249,12 @@ button {
 }
 
 .workspaceMain {
+    position: relative;
+    left: -100px;
     height: 100vh;
     overflow: auto;
     padding: 40px;
+    width: calc(100% + 100px);
 }
 
 .workspaceHeader {

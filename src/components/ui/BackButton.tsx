@@ -17,8 +17,6 @@ export function BackButton({ onClick }: BackButtonProps) {
                 alt=""
                 draggable={false}
             />
-
-            <span className="backAssetButtonText">Home</span>
         </button>
     );
 }
