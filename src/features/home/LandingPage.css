@@ -1,0 +1,41 @@
+.landingPage {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 50% 8%, rgba(147, 197, 253, 0.12), transparent 28rem),
+        #101418;
+}
+
+.landingContent {
+    width: min(520px, 92vw);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 34px;
+    transform: translateY(-5vh);
+}
+
+.mainLogo {
+    display: block;
+    width: min(304px, 66vw);
+    max-height: 320px;
+    height: auto;
+    object-fit: contain;
+    user-select: none;
+}
+
+.landingActions {
+    width: min(272px, 61vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 38px;
+}

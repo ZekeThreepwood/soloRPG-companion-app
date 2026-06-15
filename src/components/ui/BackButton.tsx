@@ -1,4 +1,5 @@
 import backButtonImage from "../../assets/ui/button_back.png";
+import "./BackButton.css";
 
 type BackButtonProps = {
     onClick: () => void;
@@ -10,6 +11,7 @@ export function BackButton({ onClick }: BackButtonProps) {
             className="backAssetButton"
             type="button"
             onClick={onClick}
+            aria-label="Back to home"
         >
             <img
                 className="backAssetButtonImage"

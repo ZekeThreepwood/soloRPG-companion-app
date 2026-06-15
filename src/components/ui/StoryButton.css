@@ -1,0 +1,51 @@
+.storyButton {
+    position: relative;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+    line-height: 0;
+    user-select: none;
+}
+
+.storyButton:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.storyButton:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.storyButton:disabled {
+    cursor: not-allowed;
+}
+
+.storyButtonImage {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+.storyButtonText {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111827;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+}
+
+.storyButton:disabled .storyButtonText {
+    color: #6b7280;
+}

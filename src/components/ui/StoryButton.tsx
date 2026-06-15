@@ -2,6 +2,7 @@ import { useState } from "react";
 import buttonBubble from "../../assets/ui/button_bubble.png";
 import buttonBubblePressed from "../../assets/ui/button_bubble_pressed.png";
 import buttonBubbleDisabled from "../../assets/ui/button_bubble_disabled.png";
+import "./StoryButton.css";
 
 type StoryButtonProps = {
     children: string;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { BackButton } from "../../components/ui/BackButton";
 import { SideTabButton } from "../../components/ui/SideTabButton";
+import "./StoryWorkspace.css";
 
 type StoryWorkspaceProps = {
     onBackToLanding: () => void;
@@ -9,7 +10,7 @@ type StoryWorkspaceProps = {
 
 type StoryMode = "scenes" | "structure" | "items" | "assets";
 
-type SideTabSize = "small" | "long";
+type SideTabSize = "small" | "medium" | "long";
 
 const STORY_MODES: Array<{
     id: StoryMode;
@@ -17,7 +18,7 @@ const STORY_MODES: Array<{
     tabSize: SideTabSize;
 }> = [
         { id: "scenes", label: "Scenes", tabSize: "small" },
-        { id: "structure", label: "Structure", tabSize: "long" },
+        { id: "structure", label: "Structure", tabSize: "medium" },
         { id: "items", label: "Items", tabSize: "small" },
         { id: "assets", label: "Assets", tabSize: "small" },
     ];

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./styles/app.css";
 import { LandingPage } from "./features/home/LandingPage";
 import { StoryWorkspace } from "./features/story/StoryWorkspace";
 

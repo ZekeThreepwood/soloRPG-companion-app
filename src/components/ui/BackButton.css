@@ -1,0 +1,23 @@
+.backAssetButton {
+    position: relative;
+    top: -40px;
+    width: 108px;
+    border: 0;
+    padding: 0;
+    margin: 0 0 8px;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+    line-height: 0;
+    user-select: none;
+    scale: 0.5;
+}
+
+.backAssetButtonImage {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+}
