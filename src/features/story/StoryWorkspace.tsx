@@ -21,10 +21,10 @@ type SideTabSize = "small" | "medium" | "long";
 
 const STORY_MODES: Array<{ id: StoryMode; label: string; tabSize: SideTabSize }> = [
     { id: "structure", label: "Structure", tabSize: "medium" },
-    { id: "scenes",    label: "Scenes",    tabSize: "small"  },
-    { id: "items",     label: "Items",     tabSize: "small"  },
-    { id: "quests",    label: "Quests",    tabSize: "small"  },
-    { id: "assets",    label: "Assets",    tabSize: "small"  },
+    { id: "scenes", label: "Scenes", tabSize: "small" },
+    { id: "items", label: "Items", tabSize: "small" },
+    { id: "quests", label: "Quests", tabSize: "small" },
+    { id: "assets", label: "Assets", tabSize: "small" },
     { id: "templates", label: "Templates", tabSize: "medium" },
 ];
 
@@ -153,11 +153,11 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
 
 function getModeTitle(mode: StoryMode): string {
     switch (mode) {
-        case "structure":  return "Structure";
-        case "scenes":     return "Scenes";
-        case "items":      return "Items";
-        case "quests":     return "Quests";
-        case "assets":     return "Assets";
-        case "templates":  return "Templates";
+        case "structure": return "Structure";
+        case "scenes": return "Scenes";
+        case "items": return "Items";
+        case "quests": return "Quests";
+        case "assets": return "Assets";
+        case "templates": return "Templates";
     }
 }

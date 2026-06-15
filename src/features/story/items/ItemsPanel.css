@@ -287,3 +287,99 @@
 .entityFieldTextarea::placeholder {
     color: #374151;
 }
+
+.entityFieldHint {
+    font-size: 11px;
+    color: #4b5563;
+}
+
+.entityFieldCode {
+    font-family: "SF Mono", "Fira Code", monospace;
+    color: #6b7280;
+    font-size: 11px;
+}
+
+/* Items table */
+
+.itemTableSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.itemTableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.itemTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.itemTableTh {
+    padding: 6px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.itemTableThRef  { width: 160px; }
+.itemTableThName { width: 200px; }
+.itemTableThActions { width: 120px; }
+
+.itemTableRow {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    transition: background 0.1s;
+}
+
+.itemTableRow:hover {
+    background: rgba(148, 163, 184, 0.04);
+}
+
+.itemTableRow:hover .itemTableRowActions {
+    opacity: 1;
+}
+
+.itemTableTd {
+    padding: 10px 12px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.itemTableTdRef {
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 12px;
+    color: #4b5563;
+}
+
+.itemTableTdName {
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+.itemTableTdDesc {
+    color: #6b7280;
+}
+
+.itemTableTdActions {
+    text-align: right;
+}
+
+.itemTableRowActions {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    opacity: 0;
+    transition: opacity 0.12s;
+}
+
+.itemTableEmpty {
+    color: #374151;
+}

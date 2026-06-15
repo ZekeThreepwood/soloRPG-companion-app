@@ -1,5 +1,6 @@
 .sideTabButton {
     position: relative;
+    top: -60px;
     border: 0;
     padding: 0;
     margin: 0;
@@ -13,18 +14,17 @@
 }
 
 .sideTabButton+.sideTabButton {
-    margin-top: -57px;
+    margin-top: -180px;
 }
 
 .sideTabButton:hover {
     opacity: 1;
-    transform: translateX(2px);
+    transform: translateX(0px);
 }
 
 .sideTabButtonActive {
     opacity: 1;
-    transform: translateX(4px);
-    z-index: 1;
+    transform: translateX(5px);
 }
 
 .sideTabButton-small {
@@ -45,6 +45,7 @@
     height: auto;
     pointer-events: none;
     user-select: none;
+    scale: 0.4;
 }
 
 .sideTabButtonText {
