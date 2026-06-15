@@ -1,7 +1,7 @@
 :root {
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: #e5e7eb;
-    background: #111827;
+    color: #f9fafb;
+    background: #101418;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
 }
@@ -10,44 +10,214 @@
     box-sizing: border-box;
 }
 
-html {
-    background: #111827;
-}
-
-body {
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
     margin: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-    background: #111827;
+    overflow: hidden;
+    background: #101418;
 }
 
 button {
-    border: 1px solid #4b5563;
-    border-radius: 8px;
-    background: #1f2937;
-    color: #f9fafb;
-    padding: 10px 14px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
+    font-family: inherit;
 }
 
-button:hover {
+.landingPage {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 50% 8%, rgba(147, 197, 253, 0.12), transparent 28rem),
+        #101418;
+}
+
+.landingContent {
+    width: min(520px, 92vw);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 34px;
+    transform: translateY(-5vh);
+}
+
+.mainLogo {
+    display: block;
+    width: min(304px, 66vw);
+    max-height: 320px;
+    height: auto;
+    object-fit: contain;
+    user-select: none;
+}
+
+.landingActions {
+    width: min(272px, 61vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 38px;
+}
+
+.storyButton {
+    position: relative;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+    line-height: 0;
+    user-select: none;
+}
+
+.storyButton:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.storyButton:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.storyButton:disabled {
+    cursor: not-allowed;
+}
+
+.storyButtonImage {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+.storyButtonText {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111827;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+}
+
+.storyButton:disabled .storyButtonText {
+    color: #6b7280;
+}
+
+.workspacePage {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(147, 197, 253, 0.12), transparent 32rem),
+        #101418;
+}
+
+.workspaceSidebar {
+    height: 100vh;
+    padding: 24px 14px;
+    border-right: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(15, 23, 42, 0.72);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.workspaceBackButton {
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    background: #1f2937;
+    color: #f9fafb;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.workspaceBackButton:hover {
     background: #374151;
 }
 
-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
+.sideTabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.app {
-    min-height: 100vh;
-    padding: 24px;
-    background: #111827;
+.sideTabButton {
+    position: relative;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+    line-height: 0;
+    user-select: none;
+    opacity: 0.78;
 }
 
-.header {
+.sideTabButton:hover {
+    opacity: 1;
+    transform: translateX(2px);
+}
+
+.sideTabButtonActive {
+    opacity: 1;
+    transform: translateX(6px);
+}
+
+.sideTabButtonImage {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+}
+
+.sideTabButtonText {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111827;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
+}
+
+.sideTabButtonActive .sideTabButtonText {
+    color: #000000;
+}
+
+.workspaceMain {
+    height: 100vh;
+    overflow: auto;
+    padding: 40px;
+}
+
+.workspaceHeader {
     margin-bottom: 24px;
 }
 
@@ -55,96 +225,33 @@ button:disabled {
     margin: 0 0 8px;
     color: #93c5fd;
     font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-weight: 800;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 
-.header h1 {
+.workspaceHeader h1 {
     margin: 0;
-    color: #f9fafb;
-    font-size: 36px;
+    font-size: 44px;
     line-height: 1.1;
 }
 
-.header p {
+.workspacePanel {
+    min-height: 420px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 20px;
+    background: rgba(31, 41, 55, 0.78);
+    padding: 32px;
+}
+
+.workspacePanel h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+}
+
+.workspacePanel p {
     max-width: 760px;
     color: #9ca3af;
-}
-
-.panel {
-    border: 1px solid #374151;
-    border-radius: 12px;
-    background: #1f2937;
-    padding: 16px;
-    margin-bottom: 16px;
-}
-
-.panel h2 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    color: #f9fafb;
-}
-
-.panel h3 {
-    color: #f9fafb;
-}
-
-.panel p {
-    color: #9ca3af;
-}
-
-.panelHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-}
-
-.panelHeader p {
-    margin-bottom: 0;
-    color: #9ca3af;
-}
-
-.contracts {
-    display: grid;
-    gap: 16px;
-}
-
-.path {
-    color: #93c5fd;
-    word-break: break-all;
-}
-
-.checkList {
-    display: grid;
-    gap: 12px;
-    padding-left: 20px;
-}
-
-.checkList li {
-    color: #e5e7eb;
-}
-
-pre {
-    overflow: auto;
-    max-height: 480px;
-    border-radius: 8px;
-    background: #030712;
-    color: #d1d5db;
-    padding: 12px;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-code {
-    color: #93c5fd;
-}
-
-.error {
-    border-color: #ef4444;
-}
-
-.stderr {
-    color: #fca5a5;
+    font-size: 18px;
+    line-height: 1.6;
 }

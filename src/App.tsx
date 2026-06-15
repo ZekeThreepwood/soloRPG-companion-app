@@ -1,21 +1,34 @@
+import { useState } from "react";
 import "./styles/app.css";
-import { EngineRootPicker } from "./features/engine/EngineRootPicker";
-import { ContractViewer } from "./features/engine/ContractViewer";
+import { LandingPage } from "./features/home/LandingPage";
+import { StoryWorkspace } from "./features/story/StoryWorkspace";
+
+type AppScreen = "landing" | "new-story";
 
 export default function App() {
-    return (
-        <main className="app">
-            <header className="header">
-                <p className="eyebrow">soloRPG Companion App</p>
-                <h1>soloRPG Writer</h1>
-                <p>
-                    Campaign authoring tool for the soloRPG engine. MVP-0 loads the engine
-                    contracts directly from your local Python project.
-                </p>
-            </header>
+    const [screen, setScreen] = useState<AppScreen>("landing");
 
-            <EngineRootPicker />
-            <ContractViewer />
-        </main>
+    function handleNewStory() {
+        setScreen("new-story");
+    }
+
+    function handleLoadStory() {
+        // Disabled for now.
+        // Later this will load a story JSON/package and hydrate the editor UI.
+    }
+
+    if (screen === "new-story") {
+        return (
+            <StoryWorkspace
+                onBackToLanding={() => setScreen("landing")}
+            />
+        );
+    }
+
+    return (
+        <LandingPage
+            onNewStory={handleNewStory}
+            onLoadStory={handleLoadStory}
+        />
     );
 }
