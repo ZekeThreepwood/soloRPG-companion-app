@@ -44,6 +44,7 @@ export function ScenesPanel() {
         return (
             <SceneForm
                 initialScene={editingScene}
+                currentSceneId={editingId ?? undefined}
                 onSave={handleSave}
                 onCancel={handleCancel}
             />

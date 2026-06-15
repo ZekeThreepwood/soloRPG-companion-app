@@ -1,0 +1,65 @@
+.entitySelect {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.entitySelectPills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.entityPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    background: rgba(147, 197, 253, 0.12);
+    border: 1px solid rgba(147, 197, 253, 0.35);
+    border-radius: 4px;
+    font-size: 13px;
+    color: #93c5fd;
+}
+
+.entityPillRemove {
+    background: none;
+    border: none;
+    color: #93c5fd;
+    cursor: pointer;
+    padding: 0;
+    font-size: 15px;
+    line-height: 1;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+}
+
+.entityPillRemove:hover {
+    opacity: 1;
+}
+
+.entitySelectDropdown {
+    width: 100%;
+    padding: 7px 12px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    appearance: none;
+}
+
+.entitySelectDropdown:focus {
+    border-color: #93c5fd;
+}
+
+.entitySelectDropdown:disabled {
+    opacity: 0.4;
+    cursor: default;
+    color: #6b7280;
+}

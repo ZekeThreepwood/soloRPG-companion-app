@@ -94,7 +94,7 @@
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
 }
 
 .choiceField {
@@ -105,7 +105,7 @@
 
 .choiceFieldLabel {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     color: #6b7280;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -137,6 +137,15 @@
     font-size: 13px;
 }
 
+.choiceSelect {
+    appearance: none;
+    cursor: pointer;
+}
+
+.choiceInputSmall {
+    width: 100px;
+}
+
 .choiceDestRow {
     display: flex;
     align-items: center;
@@ -161,21 +170,31 @@
     accent-color: #93c5fd;
 }
 
-.choiceOptionals {
+/* Conditions / Effects sections */
+.choiceSection {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding-top: 4px;
-    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 8px;
 }
 
-.choiceOptionalsLabel {
-    margin: 0 0 4px;
+.choiceSectionLabel {
+    margin: 0;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     color: #4b5563;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
+}
+
+.choiceSectionHint {
+    margin: 0 0 4px;
+    font-size: 11px;
+    color: #374151;
+    font-style: italic;
 }
 
 .choiceToggleRow {
@@ -198,8 +217,10 @@
     accent-color: #93c5fd;
     width: 14px;
     height: 14px;
+    flex-shrink: 0;
 }
 
+/* Flag editor */
 .flagEditor {
     display: flex;
     flex-direction: column;
@@ -223,6 +244,7 @@
     font-size: 13px;
     font-family: "SF Mono", "Fira Code", monospace;
     outline: none;
+    transition: border-color 0.15s;
 }
 
 .flagKeyInput:focus {
@@ -243,6 +265,7 @@
     font-family: "SF Mono", "Fira Code", monospace;
     outline: none;
     cursor: pointer;
+    appearance: none;
 }
 
 .flagRemoveBtn {
@@ -268,6 +291,7 @@
     font-size: 12px;
     cursor: pointer;
     padding: 4px 10px;
+    font-family: inherit;
 }
 
 .flagAddBtn:hover {

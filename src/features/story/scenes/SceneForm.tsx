@@ -5,6 +5,7 @@ import "./SceneForm.css";
 
 type SceneFormProps = {
     initialScene?: Scene;
+    currentSceneId?: string;
     onSave: (scene: Scene) => void;
     onCancel: () => void;
 };
@@ -13,11 +14,14 @@ function makeEmptyChoice(): Choice {
     return {
         _key: crypto.randomUUID(),
         text: "",
-        start_quests: [],
-        complete_quests: [],
+        requires_items: [],
+        requires_missing_items: [],
+        requires_flags: {},
         add_items: [],
         remove_items: [],
-        requires_items: [],
+        start_quests: [],
+        complete_quests: [],
+        fail_quests: [],
         set_flags: {},
     };
 }
@@ -36,7 +40,7 @@ type FormErrors = {
     text?: string;
 };
 
-export function SceneForm({ initialScene, onSave, onCancel }: SceneFormProps) {
+export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: SceneFormProps) {
     const [title, setTitle] = useState(initialScene?.title ?? "");
     const [id, setId] = useState(initialScene?.id ?? "");
     const [idManuallyEdited, setIdManuallyEdited] = useState(!!initialScene);
@@ -253,6 +257,7 @@ export function SceneForm({ initialScene, onSave, onCancel }: SceneFormProps) {
                                 key={choice._key}
                                 choice={choice}
                                 index={i}
+                                currentSceneId={currentSceneId}
                                 onChange={(updated) => updateChoice(i, updated)}
                                 onRemove={() => removeChoice(i)}
                                 canMoveUp={i > 0}

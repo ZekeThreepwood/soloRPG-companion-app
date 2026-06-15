@@ -3,6 +3,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { BackButton } from "../../components/ui/BackButton";
 import { SideTabButton } from "../../components/ui/SideTabButton";
 import { ScenesPanel } from "./scenes/ScenesPanel";
+import { ItemsPanel } from "./items/ItemsPanel";
 import "./StoryWorkspace.css";
 
 type StoryWorkspaceProps = {
@@ -89,15 +90,7 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                         </>
                     )}
 
-                    {activeMode === "items" && (
-                        <>
-                            <h2>Items</h2>
-                            <p>
-                                This section will manage items that can be granted, removed,
-                                required, or referenced by story choices and conditions.
-                            </p>
-                        </>
-                    )}
+                    {activeMode === "items" && <ItemsPanel />}
 
                     {activeMode === "assets" && (
                         <>
