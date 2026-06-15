@@ -1,35 +1,29 @@
 import { useEffect, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { BackButton } from "../../components/ui/BackButton";
 import { SideTabButton } from "../../components/ui/SideTabButton";
 
 type StoryWorkspaceProps = {
     onBackToLanding: () => void;
 };
 
-type StoryMode =
-    | "story"
-    | "scenes"
-    | "characters"
-    | "items"
-    | "quests"
-    | "assets"
-    | "export";
+type StoryMode = "scenes" | "structure" | "items" | "assets";
+
+type SideTabSize = "small" | "long";
 
 const STORY_MODES: Array<{
     id: StoryMode;
     label: string;
+    tabSize: SideTabSize;
 }> = [
-        { id: "story", label: "Story" },
-        { id: "scenes", label: "Scenes" },
-        { id: "characters", label: "Characters" },
-        { id: "items", label: "Items" },
-        { id: "quests", label: "Quests" },
-        { id: "assets", label: "Assets" },
-        { id: "export", label: "Export" },
+        { id: "scenes", label: "Scenes", tabSize: "small" },
+        { id: "structure", label: "Structure", tabSize: "long" },
+        { id: "items", label: "Items", tabSize: "small" },
+        { id: "assets", label: "Assets", tabSize: "small" },
     ];
 
 export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
-    const [activeMode, setActiveMode] = useState<StoryMode>("story");
+    const [activeMode, setActiveMode] = useState<StoryMode>("scenes");
 
     useEffect(() => {
         async function maximizeWindow() {
@@ -47,19 +41,14 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
     return (
         <main className="workspacePage">
             <aside className="workspaceSidebar">
-                <button
-                    className="workspaceBackButton"
-                    type="button"
-                    onClick={onBackToLanding}
-                >
-                    ← Home
-                </button>
+                <BackButton onClick={onBackToLanding} />
 
                 <nav className="sideTabs" aria-label="Story editor modes">
                     {STORY_MODES.map((mode) => (
                         <SideTabButton
                             key={mode.id}
                             label={mode.label}
+                            size={mode.tabSize}
                             active={activeMode === mode.id}
                             onClick={() => setActiveMode(mode.id)}
                         />
@@ -74,32 +63,24 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                 </header>
 
                 <div className="workspacePanel">
-                    {activeMode === "story" && (
-                        <>
-                            <h2>Story Setup</h2>
-                            <p>
-                                This is where the app will collect the story title, author,
-                                description, campaign id, and create the first playable scene.
-                            </p>
-                        </>
-                    )}
-
                     {activeMode === "scenes" && (
                         <>
                             <h2>Scenes</h2>
                             <p>
-                                This mode will become the visual story graph where each scene is
-                                a node and each choice can connect to another scene.
+                                This section will be the main story scene editor. It will let
+                                you create scenes, write scene text, assign templates, choose
+                                assets, and define player choices.
                             </p>
                         </>
                     )}
 
-                    {activeMode === "characters" && (
+                    {activeMode === "structure" && (
                         <>
-                            <h2>Characters</h2>
+                            <h2>Structure</h2>
                             <p>
-                                This mode will manage NPCs, companions, enemies, and reusable
-                                character assets for the story.
+                                This section will handle the high-level flow of the story. It
+                                will later become the place for branch organization, scene graph
+                                structure, entry flow, and overall navigation logic.
                             </p>
                         </>
                     )}
@@ -108,18 +89,8 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                         <>
                             <h2>Items</h2>
                             <p>
-                                This mode will manage items that can be found, required,
-                                removed, or rewarded through choices.
-                            </p>
-                        </>
-                    )}
-
-                    {activeMode === "quests" && (
-                        <>
-                            <h2>Quests</h2>
-                            <p>
-                                This mode will manage basic quest states and story objectives
-                                once the engine quest system is fully closed.
+                                This section will manage items that can be granted, removed,
+                                required, or referenced by story choices and conditions.
                             </p>
                         </>
                     )}
@@ -128,18 +99,8 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                         <>
                             <h2>Assets</h2>
                             <p>
-                                This mode will manage imported images and map them to campaign
-                                asset paths.
-                            </p>
-                        </>
-                    )}
-
-                    {activeMode === "export" && (
-                        <>
-                            <h2>Export</h2>
-                            <p>
-                                This mode will export the current story into a soloRPG campaign
-                                package that the engine can load.
+                                This section will manage story images and other imported
+                                campaign assets, and map them to the campaign package structure.
                             </p>
                         </>
                     )}
@@ -151,19 +112,13 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
 
 function getModeTitle(mode: StoryMode): string {
     switch (mode) {
-        case "story":
-            return "Story Setup";
         case "scenes":
-            return "Scene Editor";
-        case "characters":
-            return "Characters";
+            return "Scenes";
+        case "structure":
+            return "Structure";
         case "items":
             return "Items";
-        case "quests":
-            return "Quests";
         case "assets":
             return "Assets";
-        case "export":
-            return "Export";
     }
 }

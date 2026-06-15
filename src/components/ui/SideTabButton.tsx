@@ -1,28 +1,40 @@
-import sideTabButton from "../../assets/ui/button_sidetabs.png";
+import sideTabButtonSmall from "../../assets/ui/button_sidetabs_small.png";
+import sideTabButtonMedium from "../../assets/ui/button_sidetabs_medium.png";
+
+type SideTabSize = "small" | "medium";
 
 type SideTabButtonProps = {
     label: string;
+    size: SideTabSize;
     active: boolean;
     onClick: () => void;
 };
 
-export function SideTabButton({ label, active, onClick }: SideTabButtonProps) {
+export function SideTabButton({
+    label,
+    size,
+    active,
+    onClick,
+}: SideTabButtonProps) {
+    const sideTabButtonImage =
+        size === "medium" ? sideTabButtonMedium : sideTabButtonSmall;
+
     return (
         <button
-            className={`sideTabButton ${active ? "sideTabButtonActive" : ""}`}
+            className={`sideTabButton sideTabButton-${size} ${active ? "sideTabButtonActive" : ""
+                }`}
             type="button"
             onClick={onClick}
+            aria-pressed={active}
         >
             <img
                 className="sideTabButtonImage"
-                src={sideTabButton}
+                src={sideTabButtonImage}
                 alt=""
                 draggable={false}
             />
 
-            <span className="sideTabButtonText">
-                {label}
-            </span>
+            <span className="sideTabButtonText">{label}</span>
         </button>
     );
 }
