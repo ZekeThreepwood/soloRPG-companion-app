@@ -4,6 +4,9 @@ import { BackButton } from "../../components/ui/BackButton";
 import { SideTabButton } from "../../components/ui/SideTabButton";
 import { ScenesPanel } from "./scenes/ScenesPanel";
 import { ItemsPanel } from "./items/ItemsPanel";
+import { useStoryStore } from "../../app/storyStore";
+import { useAutoSave } from "../../app/useAutoSave";
+import { saveProject } from "../../app/saveLoad";
 import "./StoryWorkspace.css";
 
 type StoryWorkspaceProps = {
@@ -27,7 +30,13 @@ const STORY_MODES: Array<{
 
 export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
     const [activeMode, setActiveMode] = useState<StoryMode>("scenes");
+    const [isSaving, setIsSaving] = useState(false);
     const didResize = useRef(false);
+
+    const storyTitle = useStoryStore((s) => s.storyTitle);
+    const isDirty = useStoryStore((s) => s.isDirty);
+
+    useAutoSave();
 
     useEffect(() => {
         if (didResize.current) return;
@@ -52,6 +61,12 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
         expandWindow();
     }, []);
 
+    async function handleSave() {
+        setIsSaving(true);
+        await saveProject();
+        setIsSaving(false);
+    }
+
     return (
         <main className="workspacePage">
             <aside className="workspaceSidebar">
@@ -72,8 +87,23 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
 
             <section className="workspaceMain">
                 <header className="workspaceHeader">
-                    <p className="eyebrow">New Story</p>
-                    <h1>{getModeTitle(activeMode)}</h1>
+                    <div className="workspaceHeaderLeft">
+                        <p className="eyebrow">{storyTitle || "Untitled Story"}</p>
+                        <h1>{getModeTitle(activeMode)}</h1>
+                    </div>
+                    <div className="workspaceHeaderActions">
+                        {isDirty && !isSaving && (
+                            <span className="saveStatus">Unsaved</span>
+                        )}
+                        <button
+                            type="button"
+                            className="saveBtn"
+                            onClick={handleSave}
+                            disabled={isSaving}
+                        >
+                            {isSaving ? "Saving…" : "Save"}
+                        </button>
+                    </div>
                 </header>
 
                 <div className="workspacePanel">

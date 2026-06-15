@@ -48,7 +48,7 @@ export function LandingPage({ onNewStory, onLoadStory }: LandingPageProps) {
                         New Story
                     </StoryButton>
 
-                    <StoryButton onClick={onLoadStory} disabled>
+                    <StoryButton onClick={onLoadStory}>
                         Load Story
                     </StoryButton>
                 </div>

@@ -43,6 +43,52 @@
 
 .workspaceHeader {
     margin-bottom: 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.workspaceHeaderLeft {
+    display: flex;
+    flex-direction: column;
+}
+
+.workspaceHeaderActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 6px;
+}
+
+.saveStatus {
+    font-size: 12px;
+    font-weight: 600;
+    color: #f59e0b;
+    letter-spacing: 0.03em;
+}
+
+.saveBtn {
+    padding: 8px 18px;
+    background: rgba(30, 58, 95, 0.8);
+    border: 1px solid #3b82f6;
+    border-radius: 8px;
+    color: #93c5fd;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.saveBtn:hover:not(:disabled) {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+}
+
+.saveBtn:disabled {
+    opacity: 0.55;
+    cursor: default;
 }
 
 .eyebrow {

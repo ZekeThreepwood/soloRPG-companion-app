@@ -1,33 +1,36 @@
 import { useState } from "react";
 import { LandingPage } from "./features/home/LandingPage";
+import { NewStorySetup } from "./features/home/NewStorySetup";
 import { StoryWorkspace } from "./features/story/StoryWorkspace";
+import { openProject } from "./app/saveLoad";
 
-type AppScreen = "landing" | "new-story";
+type AppScreen = "landing" | "setup" | "editing";
 
 export default function App() {
     const [screen, setScreen] = useState<AppScreen>("landing");
 
-    function handleNewStory() {
-        setScreen("new-story");
-    }
-
-    function handleLoadStory() {
-        // Disabled for now.
-        // Later this will load a story JSON/package and hydrate the editor UI.
-    }
-
-    if (screen === "new-story") {
-        return (
-            <StoryWorkspace
-                onBackToLanding={() => setScreen("landing")}
-            />
-        );
+    async function handleLoadStory() {
+        const loaded = await openProject();
+        if (loaded) setScreen("editing");
     }
 
     return (
-        <LandingPage
-            onNewStory={handleNewStory}
-            onLoadStory={handleLoadStory}
-        />
+        <>
+            {screen === "landing" && (
+                <LandingPage
+                    onNewStory={() => setScreen("setup")}
+                    onLoadStory={handleLoadStory}
+                />
+            )}
+            {screen === "setup" && (
+                <NewStorySetup
+                    onCancel={() => setScreen("landing")}
+                    onCreate={() => setScreen("editing")}
+                />
+            )}
+            {screen === "editing" && (
+                <StoryWorkspace onBackToLanding={() => setScreen("landing")} />
+            )}
+        </>
     );
 }

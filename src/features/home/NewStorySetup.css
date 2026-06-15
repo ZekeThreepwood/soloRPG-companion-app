@@ -1,0 +1,115 @@
+.setupPage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(147, 197, 253, 0.12), transparent 32rem),
+        #101418;
+}
+
+.setupCard {
+    width: 460px;
+    background: rgba(31, 41, 55, 0.92);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.setupTitle {
+    margin: 0;
+    font-size: 28px;
+    color: #f9fafb;
+}
+
+.setupField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.setupLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.setupRequired {
+    color: #f87171;
+}
+
+.setupInput {
+    padding: 12px 16px;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 10px;
+    color: #f9fafb;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.setupInput:focus {
+    border-color: #93c5fd;
+}
+
+.setupInput::placeholder {
+    color: #374151;
+}
+
+.setupInputError {
+    border-color: rgba(248, 113, 113, 0.6);
+}
+
+.setupErrorMsg {
+    font-size: 12px;
+    color: #f87171;
+}
+
+.setupActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.setupBtnSecondary {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #9ca3af;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.setupBtnSecondary:hover {
+    border-color: rgba(148, 163, 184, 0.5);
+    color: #f9fafb;
+}
+
+.setupBtnPrimary {
+    padding: 10px 20px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.setupBtnPrimary:hover {
+    background: #2563eb;
+}
