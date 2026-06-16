@@ -14,29 +14,30 @@
 }
 
 .sideTabButton+.sideTabButton {
-    margin-top: -180px;
+    margin-top: -325px;
 }
 
 .sideTabButton:hover {
     opacity: 1;
-    transform: translateX(0px);
 }
 
 .sideTabButtonActive {
     opacity: 1;
-    transform: translateX(5px);
 }
 
 .sideTabButton-small {
-    width: 108px;
+    width: 150px;
+    top: -407px;
+
 }
 
 .sideTabButton-medium {
-    width: 78px;
+    width: 150px;
+    top: -285px;
 }
 
 .sideTabButton-long {
-    width: 108px;
+    width: 150px;
 }
 
 .sideTabButtonImage {
@@ -45,7 +46,7 @@
     height: auto;
     pointer-events: none;
     user-select: none;
-    scale: 0.4;
+    scale: 0.3;
 }
 
 .sideTabButtonText {

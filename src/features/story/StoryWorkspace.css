@@ -3,7 +3,7 @@
     height: 100vh;
     overflow: hidden;
     display: grid;
-    grid-template-columns: 118px 1fr;
+    grid-template-columns: 70px 1fr;
     background:
         radial-gradient(circle at 50% 0%, rgba(147, 197, 253, 0.12), transparent 32rem),
         #101418;
@@ -39,7 +39,7 @@
     left: -100px;
     height: 100vh;
     overflow: auto;
-    padding: 40px;
+    padding: 125px;
     width: calc(100% + 100px);
 }
 
