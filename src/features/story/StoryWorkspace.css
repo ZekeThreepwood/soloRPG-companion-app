@@ -36,10 +36,11 @@
 
 .workspaceMain {
     position: relative;
-    left: -100px;
+    top: -50px;
+    left: -50px;
     height: 100vh;
     overflow: auto;
-    padding: 125px;
+    padding: 80px;
     width: calc(100% + 100px);
 }
 

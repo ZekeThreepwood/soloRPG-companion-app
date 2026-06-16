@@ -56,7 +56,7 @@ function buildEdges(scenes: Scene[], sceneIds: Set<string>): Edge[] {
         scene.choices.forEach((choice) => {
             if (!choice.next_scene || !sceneIds.has(choice.next_scene)) return;
             const text = choice.text ?? "";
-            const label = text.length > 36 ? text.slice(0, 36) + "…" : text || "(no text)";
+            const label = text.length > 36 ? text.slice(0, 36) + "…" : text || "[write choice text]";
             result.push({
                 id: `${scene.id}__${choice._key}`,
                 source: scene.id,
