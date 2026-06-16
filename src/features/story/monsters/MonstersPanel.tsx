@@ -28,6 +28,7 @@ export function MonstersPanel() {
                     <tr>
                         <th className="monstersTh monstersThRef">Ref</th>
                         <th className="monstersTh monstersThName">Name</th>
+                        <th className="monstersTh monstersThAsset">Asset</th>
                         <th className="monstersTh monstersThStat">HP</th>
                         <th className="monstersTh monstersThStat">AC</th>
                         <th className="monstersTh monstersThStat">Init</th>
@@ -41,6 +42,7 @@ export function MonstersPanel() {
                         <tr key={m.id} className="monstersRow">
                             <td className="monstersTd monstersRef">{m.id}</td>
                             <td className="monstersTd monstersName">{m.name}</td>
+                            <td className="monstersTd monstersAsset">{m.asset ?? <span className="monstersNone">—</span>}</td>
                             <td className="monstersTd monstersStat">{m.hp}</td>
                             <td className="monstersTd monstersStat">{m.armor_class}</td>
                             <td className="monstersTd monstersStat">{m.initiative >= 0 ? `+${m.initiative}` : m.initiative}</td>
