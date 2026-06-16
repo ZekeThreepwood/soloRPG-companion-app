@@ -12,6 +12,9 @@ on:
         required: false
         default: 'Preview build for testing.'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
