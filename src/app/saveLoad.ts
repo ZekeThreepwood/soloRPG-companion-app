@@ -24,6 +24,8 @@ function buildSnapshot(): Story {
         items: s.items,
         quests: s.quests,
         monsters: s.monsters,
+        classes: s.classes,
+        spells: s.spells,
     };
 }
 

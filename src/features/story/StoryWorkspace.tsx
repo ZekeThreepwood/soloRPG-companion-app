@@ -7,6 +7,8 @@ import { ScenesPanel } from "./scenes/ScenesPanel";
 import { ItemsPanel } from "./items/ItemsPanel";
 import { QuestsPanel } from "./items/QuestsPanel";
 import { MonstersPanel } from "./monsters/MonstersPanel";
+import { ClassesPanel } from "./classes/ClassesPanel";
+import { SpellsPanel } from "./spells/SpellsPanel";
 import { useStoryStore } from "../../app/storyStore";
 import { useAutoSave } from "../../app/useAutoSave";
 import { saveProject } from "../../app/saveLoad";
@@ -16,7 +18,7 @@ type StoryWorkspaceProps = {
     onBackToLanding: () => void;
 };
 
-type StoryMode = "structure" | "scenes" | "items" | "quests" | "monsters" | "assets" | "templates";
+type StoryMode = "structure" | "scenes" | "items" | "quests" | "monsters" | "classes" | "spells" | "assets" | "templates";
 
 type SideTabSize = "small" | "medium" | "long";
 
@@ -26,6 +28,8 @@ const STORY_MODES: Array<{ id: StoryMode; label: string; tabSize: SideTabSize }>
     { id: "items", label: "Items", tabSize: "small" },
     { id: "quests", label: "Quests", tabSize: "small" },
     { id: "monsters", label: "Monsters", tabSize: "small" },
+    { id: "classes", label: "Classes", tabSize: "small" },
+    { id: "spells", label: "Spells", tabSize: "small" },
     { id: "assets", label: "Assets", tabSize: "small" },
     { id: "templates", label: "Templates", tabSize: "medium" },
 ];
@@ -128,6 +132,8 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                     {activeMode === "quests" && <QuestsPanel />}
 
                     {activeMode === "monsters" && <MonstersPanel />}
+                    {activeMode === "classes" && <ClassesPanel />}
+                    {activeMode === "spells" && <SpellsPanel />}
 
                     {activeMode === "assets" && (
                         <>
@@ -162,6 +168,8 @@ function getModeTitle(mode: StoryMode): string {
         case "items": return "Items";
         case "quests": return "Quests";
         case "monsters": return "Monsters";
+        case "classes":  return "Classes";
+        case "spells":   return "Spells";
         case "assets": return "Assets";
         case "templates": return "Templates";
     }

@@ -1,0 +1,217 @@
+.spellsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.spellsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spellsTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.spellsTh {
+    padding: 6px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.spellsThRef     { width: 140px; }
+.spellsThName    { width: 160px; }
+.spellsThType    { width: 80px; }
+.spellsThStat    { width: 64px; text-align: center; }
+.spellsThActions { width: 120px; }
+
+.spellsRow {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    transition: background 0.1s;
+}
+
+.spellsRow:hover { background: rgba(148, 163, 184, 0.04); }
+.spellsRow:hover .itemTableRowActions { opacity: 1; }
+
+.spellsTd { padding: 10px 12px; font-size: 13px; vertical-align: middle; }
+
+.spellsRef  { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #4b5563; }
+.spellsName { font-weight: 600; color: #f9fafb; }
+.spellsStat { text-align: center; color: #9ca3af; font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; }
+.spellsActions { text-align: right; }
+
+.spellsTypeBadge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.spellsType-damage {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+.spellsType-heal {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #86efac;
+}
+
+.spellsClasses { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.spellsClassTag {
+    padding: 2px 8px;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 4px;
+    color: #93c5fd;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.spellsNone { color: #374151; }
+
+/* Form */
+.spellForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spellFormHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spellFormTitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #f9fafb;
+}
+
+.spellFormActions { display: flex; gap: 8px; }
+
+.spellFormBody {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.spellFormRow {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.spellFormGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.spellFormSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.spellFormSectionLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.spellFieldLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.spellFieldRequired { color: #f87171; margin-left: 2px; }
+.spellFieldErrorMsg { font-size: 12px; color: #f87171; }
+.spellFieldHint     { font-size: 11px; color: #4b5563; }
+.spellFieldCode     { font-family: "SF Mono", "Fira Code", monospace; color: #6b7280; font-size: 11px; }
+
+.spellFieldInput {
+    padding: 9px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.spellFieldInput:focus { border-color: #93c5fd; }
+.spellFieldInput::placeholder { color: #374151; }
+.spellFieldInputError { border-color: #f87171 !important; }
+.spellFieldInputNarrow { width: 80px; }
+
+.spellFieldSelect {
+    padding: 9px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+.spellFieldSelect:focus { border-color: #93c5fd; }
+
+.spellClassList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.spellClassOption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.12s;
+}
+
+.spellClassOption:hover { border-color: rgba(148, 163, 184, 0.25); }
+
+.spellClassOption input[type="checkbox"] {
+    accent-color: #3b82f6;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.spellClassName { font-size: 13px; font-weight: 600; color: #f9fafb; flex: 1; }
+.spellClassMeta { font-size: 11px; color: #4b5563; font-family: "SF Mono", "Fira Code", monospace; }

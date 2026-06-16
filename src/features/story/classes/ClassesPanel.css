@@ -1,0 +1,258 @@
+.classesSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.classesHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.classesTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.classesThRef  { width: 140px; padding: 6px 12px; font-size: 11px; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(148, 163, 184, 0.15); text-align: left; }
+.classesTh     { padding: 6px 12px; font-size: 11px; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(148, 163, 184, 0.15); text-align: left; }
+.classesThStat { width: 52px; padding: 6px 12px; font-size: 11px; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(148, 163, 184, 0.15); text-align: center; }
+.classesThActions { width: 120px; padding: 6px 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.15); }
+
+.classesRow {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    transition: background 0.1s;
+}
+
+.classesRow:hover { background: rgba(148, 163, 184, 0.04); }
+.classesRow:hover .itemTableRowActions { opacity: 1; }
+
+.classesTd { padding: 10px 12px; font-size: 13px; vertical-align: middle; }
+
+.classesRef  { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; color: #4b5563; }
+.classesName { font-weight: 600; color: #f9fafb; }
+.classesStat { text-align: center; color: #9ca3af; font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; }
+
+.classesSpells { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.classesSpellTag {
+    padding: 2px 8px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 4px;
+    color: #a78bfa;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.classesNone { color: #374151; }
+.classesActions { text-align: right; }
+
+/* Form */
+.classForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.classFormHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.classFormTitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #f9fafb;
+}
+
+.classFormActions {
+    display: flex;
+    gap: 8px;
+}
+
+.classFormBody {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.classFormRow {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.classFormGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.classFormGroupGrow { flex: 1; }
+
+.classFormSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.classFormSectionLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.classFieldLabel {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.classFieldRequired { color: #f87171; margin-left: 2px; }
+.classFieldErrorMsg { font-size: 12px; color: #f87171; }
+.classFieldHint     { font-size: 11px; color: #4b5563; }
+.classFieldCode     { font-family: "SF Mono", "Fira Code", monospace; color: #6b7280; font-size: 11px; }
+
+.classFieldInput {
+    padding: 9px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.classFieldInput:focus { border-color: #93c5fd; }
+.classFieldInput::placeholder { color: #374151; }
+.classFieldInputError { border-color: #f87171 !important; }
+.classFieldInputNarrow { width: 80px; }
+
+.classFieldSelect {
+    padding: 9px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+.classFieldSelect:focus { border-color: #93c5fd; }
+
+.classFieldTextarea {
+    padding: 9px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 14px;
+    font-family: inherit;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.classFieldTextarea:focus { border-color: #93c5fd; }
+.classFieldTextarea::placeholder { color: #374151; }
+
+.classStatsGrid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.classStatField {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.classStatLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    letter-spacing: 0.06em;
+}
+
+.classStatInput {
+    width: 100%;
+    padding: 8px 6px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 6px;
+    color: #f9fafb;
+    font-size: 14px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.classStatInput:focus { border-color: #93c5fd; }
+
+.classCombatGrid {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 16px;
+    align-items: end;
+}
+
+.classSpellList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.classSpellOption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.12s;
+}
+
+.classSpellOption:hover { border-color: rgba(148, 163, 184, 0.25); }
+
+.classSpellOption input[type="checkbox"] {
+    accent-color: #8b5cf6;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.classSpellName {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f9fafb;
+    flex: 1;
+}
+
+.classSpellMeta {
+    font-size: 11px;
+    color: #4b5563;
+    font-family: "SF Mono", "Fira Code", monospace;
+}

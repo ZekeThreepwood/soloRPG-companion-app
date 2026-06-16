@@ -1,5 +1,17 @@
 import { invoke } from "@tauri-apps/api/core";
-import type { Choice, Encounter, Item, Monster, Quest, Scene, Story } from "../types/story";
+import type {
+    CharacterClass,
+    Choice,
+    ClassCombat,
+    ClassStats,
+    Encounter,
+    Item,
+    Monster,
+    Quest,
+    Scene,
+    Spell,
+    Story,
+} from "../types/story";
 
 function dirOf(filePath: string): string {
     return filePath.replace(/[/\\][^/\\]+$/, "");
@@ -81,6 +93,54 @@ function normalizeMonsters(raw: Record<string, any>): Monster[] {
     }));
 }
 
+const DEFAULT_STATS: ClassStats = {
+    strength: 10, dexterity: 10, constitution: 10,
+    intelligence: 10, wisdom: 10, charisma: 10,
+};
+
+const DEFAULT_COMBAT: ClassCombat = {
+    armor_class: 10, attack_stat: "strength", attack_bonus: 0, damage: 2,
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function normalizeClasses(raw: Record<string, any>): { classes: CharacterClass[]; spells: Spell[] } {
+    const spellRegistry = new Map<string, Spell>();
+
+    const classes: CharacterClass[] = Object.entries(raw).map(([id, data]) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const embeddedSpells: any[] = data.spells ?? [];
+        const spellIds: string[] = [];
+
+        for (const s of embeddedSpells) {
+            if (!spellRegistry.has(s.id)) {
+                spellRegistry.set(s.id, {
+                    id: s.id,
+                    name: s.name ?? s.id,
+                    type: s.type ?? "damage",
+                    stat: s.stat,
+                    power: s.power ?? 0,
+                    attack_bonus: s.attack_bonus,
+                });
+            }
+            spellIds.push(s.id);
+        }
+
+        return {
+            id,
+            name: data.name ?? id,
+            description: data.description ?? "",
+            asset: data.asset,
+            base_hp: data.base_hp ?? 8,
+            stats: { ...DEFAULT_STATS, ...(data.stats ?? {}) },
+            combat: { ...DEFAULT_COMBAT, ...(data.combat ?? {}) },
+            spells: spellIds,
+            inventory: data.inventory ?? [],
+        };
+    });
+
+    return { classes, spells: Array.from(spellRegistry.values()) };
+}
+
 export async function loadCampaign(manifestPath: string): Promise<Story> {
     const dir = dirOf(manifestPath);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,24 +158,31 @@ export async function loadCampaign(manifestPath: string): Promise<Story> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const raw = await readJson<Record<string, any>>(`${dir}/${itemsFile}`);
         items = normalizeItems(raw);
-    } catch { /* items file absent or malformed — continue with empty */ }
+    } catch { /* absent or malformed — skip */ }
 
     let quests: Quest[] = [];
     try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const raw = await readJson<any>(`${dir}/${questsFile}`);
-        // quests.json wraps entries under a "quests" key
-        const questsData = raw.quests ?? raw;
-        quests = normalizeQuests(questsData);
-    } catch { /* quests file absent — continue with empty */ }
+        quests = normalizeQuests(raw.quests ?? raw);
+    } catch { /* absent — skip */ }
 
     let monsters: Monster[] = [];
     try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const raw = await readJson<any>(`${dir}/monster_definitions.json`);
-        const monstersData = raw.monsters ?? raw;
-        monsters = normalizeMonsters(monstersData);
-    } catch { /* monster file absent — continue with empty */ }
+        monsters = normalizeMonsters(raw.monsters ?? raw);
+    } catch { /* absent — skip */ }
+
+    let classes: CharacterClass[] = [];
+    let spells: Spell[] = [];
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const raw = await readJson<any>(`${dir}/classes.json`);
+        const result = normalizeClasses(raw.character_classes ?? raw);
+        classes = result.classes;
+        spells = result.spells;
+    } catch { /* absent — skip */ }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const scenesDict: Record<string, any> = campaign.scenes ?? {};
@@ -132,5 +199,7 @@ export async function loadCampaign(manifestPath: string): Promise<Story> {
         items,
         quests,
         monsters,
+        classes,
+        spells,
     };
 }

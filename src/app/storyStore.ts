@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Item, Monster, Quest, Scene, Story } from "../types/story";
+import type { CharacterClass, Item, Monster, Quest, Scene, Spell, Story } from "../types/story";
 
 type StoryStore = {
     storyId: string;
@@ -10,6 +10,8 @@ type StoryStore = {
     items: Item[];
     quests: Quest[];
     monsters: Monster[];
+    classes: CharacterClass[];
+    spells: Spell[];
     filePath: string | null;
     isDirty: boolean;
 
@@ -37,6 +39,14 @@ type StoryStore = {
     addMonster: (monster: Monster) => void;
     replaceMonster: (oldId: string, monster: Monster) => void;
     deleteMonster: (id: string) => void;
+
+    addCharacterClass: (cls: CharacterClass) => void;
+    replaceCharacterClass: (oldId: string, cls: CharacterClass) => void;
+    deleteCharacterClass: (id: string) => void;
+
+    addSpell: (spell: Spell) => void;
+    replaceSpell: (oldId: string, spell: Spell) => void;
+    deleteSpell: (id: string) => void;
 };
 
 export const useStoryStore = create<StoryStore>((set) => ({
@@ -48,6 +58,8 @@ export const useStoryStore = create<StoryStore>((set) => ({
     items: [],
     quests: [],
     monsters: [],
+    classes: [],
+    spells: [],
     filePath: null,
     isDirty: false,
 
@@ -61,6 +73,8 @@ export const useStoryStore = create<StoryStore>((set) => ({
             items: [],
             quests: [],
             monsters: [],
+            classes: [],
+            spells: [],
             filePath: null,
             isDirty: false,
         }),
@@ -82,6 +96,8 @@ export const useStoryStore = create<StoryStore>((set) => ({
             items: story.items,
             quests: story.quests,
             monsters: story.monsters ?? [],
+            classes: story.classes ?? [],
+            spells: story.spells ?? [],
             filePath: path,
             isDirty: false,
         }),
@@ -165,6 +181,36 @@ export const useStoryStore = create<StoryStore>((set) => ({
     deleteMonster: (id) =>
         set((state) => ({
             monsters: state.monsters.filter((m) => m.id !== id),
+            isDirty: true,
+        })),
+
+    addCharacterClass: (cls) =>
+        set((state) => ({ classes: [...state.classes, cls], isDirty: true })),
+
+    replaceCharacterClass: (oldId, cls) =>
+        set((state) => ({
+            classes: state.classes.map((c) => (c.id === oldId ? cls : c)),
+            isDirty: true,
+        })),
+
+    deleteCharacterClass: (id) =>
+        set((state) => ({
+            classes: state.classes.filter((c) => c.id !== id),
+            isDirty: true,
+        })),
+
+    addSpell: (spell) =>
+        set((state) => ({ spells: [...state.spells, spell], isDirty: true })),
+
+    replaceSpell: (oldId, spell) =>
+        set((state) => ({
+            spells: state.spells.map((s) => (s.id === oldId ? spell : s)),
+            isDirty: true,
+        })),
+
+    deleteSpell: (id) =>
+        set((state) => ({
+            spells: state.spells.filter((s) => s.id !== id),
             isDirty: true,
         })),
 }));

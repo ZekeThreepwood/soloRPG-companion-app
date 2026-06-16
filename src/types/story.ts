@@ -21,6 +21,7 @@ export type Spell = {
     id: string;
     name: string;
     type: string;
+    stat?: string;
     power: number;
     attack_bonus?: number;
 };
@@ -35,6 +36,34 @@ export type Monster = {
     attack_bonus: number;
     damage: number;
     spells: Spell[];
+};
+
+export type ClassStats = {
+    strength: number;
+    dexterity: number;
+    constitution: number;
+    intelligence: number;
+    wisdom: number;
+    charisma: number;
+};
+
+export type ClassCombat = {
+    armor_class: number;
+    attack_stat: string;
+    attack_bonus: number;
+    damage: number;
+};
+
+export type CharacterClass = {
+    id: string;
+    name: string;
+    description: string;
+    asset?: string;
+    base_hp: number;
+    stats: ClassStats;
+    combat: ClassCombat;
+    spells: string[];
+    inventory: string[];
 };
 
 export type AbilityCheck = {
@@ -68,11 +97,9 @@ export type Choice = {
     next_scene?: string;
     action?: string;
     check?: AbilityCheck;
-    // Conditions
     requires_items: string[];
     requires_missing_items: string[];
     requires_flags: Record<string, boolean>;
-    // Effects
     add_items: string[];
     remove_items: string[];
     start_quests: string[];
@@ -107,4 +134,6 @@ export type Story = {
     items: Item[];
     quests: Quest[];
     monsters: Monster[];
+    classes: CharacterClass[];
+    spells: Spell[];
 };
