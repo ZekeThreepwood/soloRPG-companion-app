@@ -4,7 +4,7 @@ import { useStoryStore } from "./storyStore";
 import { loadCampaign } from "./campaignLoader";
 import type { Story } from "../types/story";
 
-function slugify(text: string): string {
+export function slugify(text: string): string {
     return text
         .toLowerCase()
         .replace(/[^a-z0-9\s_]/g, "")

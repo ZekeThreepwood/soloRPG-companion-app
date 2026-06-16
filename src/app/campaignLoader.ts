@@ -13,7 +13,7 @@ import type {
     Story,
 } from "../types/story";
 
-function dirOf(filePath: string): string {
+export function dirOf(filePath: string): string {
     return filePath.replace(/[/\\][^/\\]+$/, "");
 }
 
@@ -23,7 +23,7 @@ async function readJson<T>(path: string): Promise<T> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeChoice(raw: any): Choice {
+export function normalizeChoice(raw: any): Choice {
     return {
         _key: crypto.randomUUID(),
         text: raw.text ?? "",
@@ -45,7 +45,7 @@ function normalizeChoice(raw: any): Choice {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeScene(id: string, raw: any): Scene {
+export function normalizeScene(id: string, raw: any): Scene {
     return {
         id,
         title: raw.title ?? id,
@@ -61,7 +61,7 @@ function normalizeScene(id: string, raw: any): Scene {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeItems(raw: Record<string, any>): Item[] {
+export function normalizeItems(raw: Record<string, any>): Item[] {
     return Object.entries(raw).map(([id, data]) => ({
         id,
         name: data.name ?? id,
@@ -70,7 +70,7 @@ function normalizeItems(raw: Record<string, any>): Item[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeQuests(raw: Record<string, any>): Quest[] {
+export function normalizeQuests(raw: Record<string, any>): Quest[] {
     return Object.entries(raw).map(([id, data]) => ({
         id,
         name: data.name ?? id,
@@ -79,7 +79,7 @@ function normalizeQuests(raw: Record<string, any>): Quest[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeMonsters(raw: Record<string, any>): Monster[] {
+export function normalizeMonsters(raw: Record<string, any>): Monster[] {
     return Object.entries(raw).map(([id, data]) => ({
         id,
         name: data.name ?? id,
@@ -103,7 +103,7 @@ const DEFAULT_COMBAT: ClassCombat = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeClasses(raw: Record<string, any>): { classes: CharacterClass[]; spells: Spell[] } {
+export function normalizeClasses(raw: Record<string, any>): { classes: CharacterClass[]; spells: Spell[] } {
     const spellRegistry = new Map<string, Spell>();
 
     const classes: CharacterClass[] = Object.entries(raw).map(([id, data]) => {

@@ -1,7 +1,7 @@
+import type { Scene } from "../types/story";
 import { useStoryStore } from "./storyStore";
 
-export function useKnownFlags(): string[] {
-    const scenes = useStoryStore((s) => s.scenes);
+export function extractKnownFlags(scenes: Scene[]): string[] {
     const flags = new Set<string>();
     scenes.forEach((scene) => {
         scene.choices.forEach((choice) => {
@@ -10,4 +10,9 @@ export function useKnownFlags(): string[] {
         });
     });
     return Array.from(flags).sort();
+}
+
+export function useKnownFlags(): string[] {
+    const scenes = useStoryStore((s) => s.scenes);
+    return extractKnownFlags(scenes);
 }
