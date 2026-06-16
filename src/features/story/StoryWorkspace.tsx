@@ -15,7 +15,7 @@ type StoryWorkspaceProps = {
     onBackToLanding: () => void;
 };
 
-type StoryMode = "structure" | "scenes" | "items" | "quests" | "assets" | "templates";
+type StoryMode = "structure" | "scenes" | "items" | "quests" | "monsters" | "assets" | "templates";
 
 type SideTabSize = "small" | "medium" | "long";
 
@@ -24,6 +24,7 @@ const STORY_MODES: Array<{ id: StoryMode; label: string; tabSize: SideTabSize }>
     { id: "scenes", label: "Scenes", tabSize: "small" },
     { id: "items", label: "Items", tabSize: "small" },
     { id: "quests", label: "Quests", tabSize: "small" },
+    { id: "monsters", label: "Monsters", tabSize: "small" },
     { id: "assets", label: "Assets", tabSize: "small" },
     { id: "templates", label: "Templates", tabSize: "medium" },
 ];
@@ -125,6 +126,15 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
 
                     {activeMode === "quests" && <QuestsPanel />}
 
+                    {activeMode === "monsters" && (
+                        <>
+                            <h2>Monsters</h2>
+                            <p>
+                                Monsters and encounter definitions will live here. Coming soon.
+                            </p>
+                        </>
+                    )}
+
                     {activeMode === "assets" && (
                         <>
                             <h2>Assets</h2>
@@ -157,6 +167,7 @@ function getModeTitle(mode: StoryMode): string {
         case "scenes": return "Scenes";
         case "items": return "Items";
         case "quests": return "Quests";
+        case "monsters": return "Monsters";
         case "assets": return "Assets";
         case "templates": return "Templates";
     }
