@@ -6,6 +6,7 @@ import { StructurePanel } from "./structure/StructurePanel";
 import { ScenesPanel } from "./scenes/ScenesPanel";
 import { ItemsPanel } from "./items/ItemsPanel";
 import { QuestsPanel } from "./items/QuestsPanel";
+import { MonstersPanel } from "./monsters/MonstersPanel";
 import { useStoryStore } from "../../app/storyStore";
 import { useAutoSave } from "../../app/useAutoSave";
 import { saveProject } from "../../app/saveLoad";
@@ -126,14 +127,7 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
 
                     {activeMode === "quests" && <QuestsPanel />}
 
-                    {activeMode === "monsters" && (
-                        <>
-                            <h2>Monsters</h2>
-                            <p>
-                                Monsters and encounter definitions will live here. Coming soon.
-                            </p>
-                        </>
-                    )}
+                    {activeMode === "monsters" && <MonstersPanel />}
 
                     {activeMode === "assets" && (
                         <>

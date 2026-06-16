@@ -1,6 +1,7 @@
 import { save, open } from "@tauri-apps/plugin-dialog";
 import { invoke } from "@tauri-apps/api/core";
 import { useStoryStore } from "./storyStore";
+import { loadCampaign } from "./campaignLoader";
 import type { Story } from "../types/story";
 
 function slugify(text: string): string {
@@ -22,6 +23,7 @@ function buildSnapshot(): Story {
         scenes: s.scenes,
         items: s.items,
         quests: s.quests,
+        monsters: s.monsters,
     };
 }
 
@@ -68,6 +70,25 @@ export async function openProject(): Promise<boolean> {
         return true;
     } catch (err) {
         console.error("Load failed:", err);
+        return false;
+    }
+}
+
+export async function openCampaign(): Promise<boolean> {
+    const selected = await open({
+        title: "Select campaign manifest.json",
+        filters: [{ name: "Campaign Manifest", extensions: ["json"] }],
+        multiple: false,
+    });
+
+    if (!selected || typeof selected !== "string") return false;
+
+    try {
+        const story = await loadCampaign(selected);
+        useStoryStore.getState().loadStory(story, selected);
+        return true;
+    } catch (err) {
+        console.error("Campaign load failed:", err);
         return false;
     }
 }

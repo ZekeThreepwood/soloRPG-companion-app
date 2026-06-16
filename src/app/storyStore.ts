@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Item, Quest, Scene, Story } from "../types/story";
+import type { Item, Monster, Quest, Scene, Story } from "../types/story";
 
 type StoryStore = {
     storyId: string;
@@ -9,6 +9,7 @@ type StoryStore = {
     scenes: Scene[];
     items: Item[];
     quests: Quest[];
+    monsters: Monster[];
     filePath: string | null;
     isDirty: boolean;
 
@@ -24,12 +25,18 @@ type StoryStore = {
     setStartScene: (id: string) => void;
     addChoiceToScene: (sceneId: string, choice: import("../types/story").Choice) => void;
     removeChoiceFromScene: (sceneId: string, choiceKey: string) => void;
+
     addItem: (item: Item) => void;
     replaceItem: (oldId: string, item: Item) => void;
     deleteItem: (id: string) => void;
+
     addQuest: (quest: Quest) => void;
     replaceQuest: (oldId: string, quest: Quest) => void;
     deleteQuest: (id: string) => void;
+
+    addMonster: (monster: Monster) => void;
+    replaceMonster: (oldId: string, monster: Monster) => void;
+    deleteMonster: (id: string) => void;
 };
 
 export const useStoryStore = create<StoryStore>((set) => ({
@@ -40,6 +47,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
     scenes: [],
     items: [],
     quests: [],
+    monsters: [],
     filePath: null,
     isDirty: false,
 
@@ -52,6 +60,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
             scenes: [],
             items: [],
             quests: [],
+            monsters: [],
             filePath: null,
             isDirty: false,
         }),
@@ -72,6 +81,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
             scenes: story.scenes,
             items: story.items,
             quests: story.quests,
+            monsters: story.monsters ?? [],
             filePath: path,
             isDirty: false,
         }),
@@ -140,6 +150,21 @@ export const useStoryStore = create<StoryStore>((set) => ({
     deleteQuest: (id) =>
         set((state) => ({
             quests: state.quests.filter((q) => q.id !== id),
+            isDirty: true,
+        })),
+
+    addMonster: (monster) =>
+        set((state) => ({ monsters: [...state.monsters, monster], isDirty: true })),
+
+    replaceMonster: (oldId, monster) =>
+        set((state) => ({
+            monsters: state.monsters.map((m) => (m.id === oldId ? monster : m)),
+            isDirty: true,
+        })),
+
+    deleteMonster: (id) =>
+        set((state) => ({
+            monsters: state.monsters.filter((m) => m.id !== id),
             isDirty: true,
         })),
 }));

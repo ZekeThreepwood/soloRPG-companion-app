@@ -1,0 +1,111 @@
+.monstersEmpty {
+    padding: 20px 0 4px;
+}
+
+.monstersEmptyHint {
+    margin: 0;
+    color: #4b5563;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.monstersEmptyHint code {
+    font-family: "SF Mono", "Fira Code", monospace;
+    color: #6b7280;
+    font-style: normal;
+}
+
+.monstersSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.monstersHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.monstersCount {
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.monstersTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.monstersTh {
+    padding: 6px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.monstersThRef  { width: 140px; }
+.monstersThName { width: 160px; }
+.monstersThStat { width: 56px; text-align: center; }
+
+.monstersRow {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+}
+
+.monstersRow:hover {
+    background: rgba(148, 163, 184, 0.04);
+}
+
+.monstersTd {
+    padding: 10px 12px;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.monstersRef {
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 12px;
+    color: #4b5563;
+}
+
+.monstersName {
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+.monstersStat {
+    text-align: center;
+    color: #9ca3af;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 12px;
+}
+
+.monstersSpells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.monstersSpellTag {
+    padding: 2px 8px;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 4px;
+    color: #a78bfa;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.monstersNone {
+    color: #374151;
+}

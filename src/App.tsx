@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LandingPage } from "./features/home/LandingPage";
 import { NewStorySetup } from "./features/home/NewStorySetup";
 import { StoryWorkspace } from "./features/story/StoryWorkspace";
-import { openProject } from "./app/saveLoad";
+import { openCampaign } from "./app/saveLoad";
 
 type AppScreen = "landing" | "setup" | "editing";
 
@@ -10,7 +10,7 @@ export default function App() {
     const [screen, setScreen] = useState<AppScreen>("landing");
 
     async function handleLoadStory() {
-        const loaded = await openProject();
+        const loaded = await openCampaign();
         if (loaded) setScreen("editing");
     }
 
