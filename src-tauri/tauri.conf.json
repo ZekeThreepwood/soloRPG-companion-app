@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "solorpg-writer",
+  "productName": "Handheld RPG",
   "version": "0.1.0",
   "identifier": "com.zeke.solorpg-writer",
   "build": {
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "solorpg-writer",
+        "title": "Handheld RPG",
         "width": 800,
         "height": 600,
         "resizable": true,
