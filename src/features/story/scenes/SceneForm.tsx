@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ChoiceEditor } from "./ChoiceEditor";
-import type { Choice, Scene, SceneTemplate } from "../../../types/story";
+import { EncounterEditor, makeEmptyEncounter } from "./EncounterEditor";
+import { AssetPickerInput } from "../../../components/ui/AssetPickerInput";
+import type { Choice, Encounter, Scene, SceneTemplate } from "../../../types/story";
 import "./SceneForm.css";
 
 type SceneFormProps = {
@@ -48,10 +50,14 @@ export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: Sc
     const [template, setTemplate] = useState<SceneTemplate | "">(
         initialScene?.scene_template ?? ""
     );
+    const [speaker, setSpeaker] = useState(initialScene?.speaker ?? "");
     const [canRevisit, setCanRevisit] = useState(initialScene?.can_revisit ?? false);
     const [canGoBack, setCanGoBack] = useState(initialScene?.can_go_back ?? false);
     const [hasAsset, setHasAsset] = useState(!!initialScene?.asset);
     const [asset, setAsset] = useState(initialScene?.asset ?? "");
+    const [encounter, setEncounter] = useState<Encounter | null>(
+        initialScene?.encounter ?? null
+    );
     const [choices, setChoices] = useState<Choice[]>(
         initialScene?.choices ?? []
     );
@@ -109,9 +115,11 @@ export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: Sc
         };
 
         if (template) scene.scene_template = template;
+        if (template === "npc_chat" && speaker.trim()) scene.speaker = speaker.trim();
         if (canRevisit) scene.can_revisit = true;
         if (canGoBack) scene.can_go_back = true;
         if (hasAsset && asset.trim()) scene.asset = asset.trim();
+        if (encounter) scene.encounter = encounter;
 
         onSave(scene);
     }
@@ -159,11 +167,25 @@ export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: Sc
                             >
                                 <option value="">— none —</option>
                                 <option value="location">location</option>
-                                <option value="item_found">item_found</option>
                                 <option value="text_scene">text_scene</option>
+                                <option value="npc_chat">npc_chat</option>
+                                <option value="item_found">item_found</option>
+                                <option value="battle_intro">battle_intro</option>
                             </select>
                         </div>
                     </div>
+
+                    {template === "npc_chat" && (
+                        <div className="sceneFormGroup">
+                            <label className="sceneFieldLabel">Speaker</label>
+                            <input
+                                className="sceneFieldInput"
+                                value={speaker}
+                                onChange={(e) => setSpeaker(e.target.value)}
+                                placeholder="NPC name shown above dialogue"
+                            />
+                        </div>
+                    )}
 
                     <div className="sceneFormGroup">
                         <label className="sceneFieldLabel">
@@ -207,12 +229,7 @@ export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: Sc
                             Has Asset
                         </label>
                         {hasAsset && (
-                            <input
-                                className="sceneFieldInput sceneFieldInputAsset"
-                                value={asset}
-                                onChange={(e) => setAsset(e.target.value)}
-                                placeholder="campaign://assets/..."
-                            />
+                            <AssetPickerInput value={asset} onChange={setAsset} />
                         )}
                     </div>
                 </div>
@@ -235,6 +252,29 @@ export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: Sc
 
                 <div className="sceneFormSection">
                     <div className="sceneFormSectionHeader">
+                        <span className="sceneFieldLabel">Encounter</span>
+                        {!encounter && (
+                            <button type="button" className="sceneFormBtnAdd"
+                                onClick={() => setEncounter(makeEmptyEncounter())}>
+                                + Add Encounter
+                            </button>
+                        )}
+                    </div>
+                    {encounter && (
+                        <EncounterEditor
+                            encounter={encounter}
+                            currentSceneId={currentSceneId}
+                            onChange={setEncounter}
+                            onRemove={() => setEncounter(null)}
+                        />
+                    )}
+                    {!encounter && (
+                        <p className="sceneNoChoicesHint">No encounter — add one to make this a combat scene.</p>
+                    )}
+                </div>
+
+                <div className="sceneFormSection">
+                    <div className="sceneFormSectionHeader">
                         <span className="sceneFieldLabel">Choices</span>
                         <button
                             type="button"
@@ -248,6 +288,12 @@ export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: Sc
                     {choices.length === 0 && (
                         <p className="sceneNoChoicesHint">
                             No choices — scenes without choices act as story endpoints.
+                        </p>
+                    )}
+
+                    {choices.length > 3 && (
+                        <p className="sceneChoiceLimitWarn">
+                            Engine limit: only 3 choices are shown at a time. Players won't see choices beyond #3.
                         </p>
                     )}
 

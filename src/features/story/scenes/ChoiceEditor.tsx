@@ -9,6 +9,7 @@ type FlagPair = { key: string; value: boolean };
 
 type Toggles = {
     useAction: boolean;
+    useCheck: boolean;
     // Conditions
     requiresItems: boolean;
     requiresMissingItems: boolean;
@@ -72,6 +73,7 @@ export function ChoiceEditor({
     const [expanded, setExpanded] = useState(true);
     const [toggles, setToggles] = useState<Toggles>({
         useAction: !!choice.action,
+        useCheck: !!choice.check,
         requiresItems: choice.requires_items.length > 0,
         requiresMissingItems: choice.requires_missing_items.length > 0,
         requiresFlags: Object.keys(choice.requires_flags).length > 0,
@@ -103,6 +105,7 @@ export function ChoiceEditor({
         if (!on) {
             switch (key) {
                 case "useAction":           update({ action: undefined }); break;
+                case "useCheck":            update({ check: undefined }); break;
                 case "requiresItems":       update({ requires_items: [] }); break;
                 case "requiresMissingItems": update({ requires_missing_items: [] }); break;
                 case "requiresFlags":
@@ -232,6 +235,74 @@ export function ChoiceEditor({
                                     <option key={s.id} value={s.id}>{s.name}</option>
                                 ))}
                             </select>
+                        )}
+                    </div>
+
+                    {/* ABILITY CHECK */}
+                    <div className="choiceSection">
+                        <div className="choiceToggleRow">
+                            <label className="choiceCheckLabel">
+                                <input type="checkbox" checked={toggles.useCheck}
+                                    onChange={(e) => {
+                                        setToggle("useCheck", e.target.checked);
+                                        if (e.target.checked) update({ check: { stat: "strength", difficulty: 12, success_scene: "", failure_scene: "" } });
+                                    }} />
+                                Ability Check
+                            </label>
+                        </div>
+                        {toggles.useCheck && (
+                            <div className="choiceCheckEditor">
+                                <div className="choiceCheckRow">
+                                    <div className="choiceCheckGroup">
+                                        <span className="choiceFieldLabel">Stat</span>
+                                        <select
+                                            className="choiceInput choiceSelect"
+                                            value={choice.check?.stat ?? "strength"}
+                                            onChange={(e) => update({ check: { ...choice.check!, stat: e.target.value } })}
+                                        >
+                                            <option value="strength">Strength</option>
+                                            <option value="dexterity">Dexterity</option>
+                                            <option value="constitution">Constitution</option>
+                                            <option value="intelligence">Intelligence</option>
+                                            <option value="wisdom">Wisdom</option>
+                                            <option value="charisma">Charisma</option>
+                                        </select>
+                                    </div>
+                                    <div className="choiceCheckGroup">
+                                        <span className="choiceFieldLabel">DC</span>
+                                        <input
+                                            type="number" min={1} max={30}
+                                            className="choiceInput choiceInputSmall"
+                                            value={choice.check?.difficulty ?? 12}
+                                            onChange={(e) => update({ check: { ...choice.check!, difficulty: parseInt(e.target.value) || 12 } })}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="choiceCheckRow">
+                                    <div className="choiceCheckGroup choiceCheckGroupGrow">
+                                        <span className="choiceFieldLabel">Success → Scene</span>
+                                        <select
+                                            className="choiceInput choiceSelect"
+                                            value={choice.check?.success_scene ?? ""}
+                                            onChange={(e) => update({ check: { ...choice.check!, success_scene: e.target.value } })}
+                                        >
+                                            <option value="">— select —</option>
+                                            {sceneOptions.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className="choiceCheckGroup choiceCheckGroupGrow">
+                                        <span className="choiceFieldLabel">Failure → Scene</span>
+                                        <select
+                                            className="choiceInput choiceSelect"
+                                            value={choice.check?.failure_scene ?? ""}
+                                            onChange={(e) => update({ check: { ...choice.check!, failure_scene: e.target.value } })}
+                                        >
+                                            <option value="">— select —</option>
+                                            {sceneOptions.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         )}
                     </div>
 

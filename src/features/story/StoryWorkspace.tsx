@@ -9,9 +9,13 @@ import { QuestsPanel } from "./items/QuestsPanel";
 import { MonstersPanel } from "./monsters/MonstersPanel";
 import { ClassesPanel } from "./classes/ClassesPanel";
 import { SpellsPanel } from "./spells/SpellsPanel";
+import { AssetsPanel } from "./assets/AssetsPanel";
 import { useStoryStore } from "../../app/storyStore";
 import { useAutoSave } from "../../app/useAutoSave";
-import { saveProject } from "../../app/saveLoad";
+import { saveProject, exportCampaign } from "../../app/saveLoad";
+import { validateCampaign } from "../../app/campaignValidator";
+import { ValidationModal } from "../../components/ui/ValidationModal";
+import type { ValidationResult } from "../../app/campaignValidator";
 import "./StoryWorkspace.css";
 
 type StoryWorkspaceProps = {
@@ -37,6 +41,8 @@ const STORY_MODES: Array<{ id: StoryMode; label: string; tabSize: SideTabSize }>
 export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
     const [activeMode, setActiveMode] = useState<StoryMode>("structure");
     const [isSaving, setIsSaving] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
+    const [validation, setValidation] = useState<ValidationResult | null>(null);
     const [editingSceneId, setEditingSceneId] = useState<string | null>(null);
     const didResize = useRef(false);
 
@@ -77,6 +83,35 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
         setIsSaving(false);
     }
 
+    function handleExport() {
+        const story = useStoryStore.getState();
+        const snapshot = {
+            id: story.storyId,
+            title: story.storyTitle,
+            start_scene: story.startScene ?? "",
+            scenes: story.scenes,
+            items: story.items,
+            quests: story.quests,
+            monsters: story.monsters,
+            classes: story.classes,
+            spells: story.spells,
+            version: "1.0",
+        };
+        const result = validateCampaign(snapshot);
+        if (result.issues.length > 0) {
+            setValidation(result);
+        } else {
+            doExport();
+        }
+    }
+
+    async function doExport() {
+        setValidation(null);
+        setIsExporting(true);
+        await exportCampaign();
+        setIsExporting(false);
+    }
+
     return (
         <main className="workspacePage">
             <aside className="workspaceSidebar">
@@ -104,6 +139,14 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                         {isDirty && !isSaving && (
                             <span className="saveStatus">Unsaved</span>
                         )}
+                        <button
+                            type="button"
+                            className="exportBtn"
+                            onClick={handleExport}
+                            disabled={isExporting}
+                        >
+                            {isExporting ? "Exporting…" : "Export Campaign"}
+                        </button>
                         <button
                             type="button"
                             className="saveBtn"
@@ -135,15 +178,7 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                     {activeMode === "classes" && <ClassesPanel />}
                     {activeMode === "spells" && <SpellsPanel />}
 
-                    {activeMode === "assets" && (
-                        <>
-                            <h2>Assets</h2>
-                            <p>
-                                This section will manage story images and other imported
-                                campaign assets, and map them to the campaign package structure.
-                            </p>
-                        </>
-                    )}
+                    {activeMode === "assets" && <AssetsPanel />}
 
                     {activeMode === "templates" && (
                         <>
@@ -157,6 +192,15 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                     )}
                 </div>
             </section>
+
+            {validation && (
+                <ValidationModal
+                    issues={validation.issues}
+                    hasErrors={validation.hasErrors}
+                    onExportAnyway={doExport}
+                    onCancel={() => setValidation(null)}
+                />
+            )}
         </main>
     );
 }

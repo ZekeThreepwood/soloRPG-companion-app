@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStoryStore } from "../../../app/storyStore";
 import type { CharacterClass, ClassStats, ClassCombat } from "../../../types/story";
+import { AssetPickerInput } from "../../../components/ui/AssetPickerInput";
 import "./ClassesPanel.css";
 
 const STATS: Array<keyof ClassStats> = [
@@ -40,6 +41,7 @@ export function ClassesPanel() {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [asset, setAsset] = useState("");
     const [baseHp, setBaseHp] = useState(8);
     const [stats, setStats] = useState<ClassStats>(emptyStats());
     const [combat, setCombat] = useState<ClassCombat>(emptyCombat());
@@ -47,14 +49,14 @@ export function ClassesPanel() {
     const [nameError, setNameError] = useState("");
 
     function openCreate() {
-        setName(""); setDescription(""); setBaseHp(8);
+        setName(""); setDescription(""); setAsset(""); setBaseHp(8);
         setStats(emptyStats()); setCombat(emptyCombat());
         setSelectedSpells([]); setNameError(""); setEditingId(null);
         setView("create");
     }
 
     function openEdit(cls: CharacterClass) {
-        setName(cls.name); setDescription(cls.description); setBaseHp(cls.base_hp);
+        setName(cls.name); setDescription(cls.description); setAsset(cls.asset ?? ""); setBaseHp(cls.base_hp);
         setStats({ ...cls.stats }); setCombat({ ...cls.combat });
         setSelectedSpells([...cls.spells]); setNameError(""); setEditingId(cls.id);
         setView("edit");
@@ -68,6 +70,7 @@ export function ClassesPanel() {
             id: editingId ?? slugify(name),
             name: name.trim(),
             description: description.trim(),
+            asset: asset.trim() || undefined,
             base_hp: baseHp,
             stats,
             combat,
@@ -139,6 +142,15 @@ export function ClassesPanel() {
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder="What defines this class?"
                             rows={2}
+                        />
+                    </div>
+
+                    <div className="classFormGroup">
+                        <label className="classFieldLabel">Asset</label>
+                        <AssetPickerInput
+                            value={asset}
+                            onChange={setAsset}
+                            placeholder="campaign://assets/characters/warrior.png"
                         />
                     </div>
 

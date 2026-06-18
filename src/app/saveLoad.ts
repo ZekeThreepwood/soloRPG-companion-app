@@ -2,6 +2,7 @@ import { save, open } from "@tauri-apps/plugin-dialog";
 import { invoke } from "@tauri-apps/api/core";
 import { useStoryStore } from "./storyStore";
 import { loadCampaign } from "./campaignLoader";
+import { exportCampaignToFolder } from "./campaignExporter";
 import type { Story } from "../types/story";
 
 export function slugify(text: string): string {
@@ -26,6 +27,7 @@ function buildSnapshot(): Story {
         monsters: s.monsters,
         classes: s.classes,
         spells: s.spells,
+        assetsDir: s.assetsDir ?? undefined,
     };
 }
 
@@ -72,6 +74,25 @@ export async function openProject(): Promise<boolean> {
         return true;
     } catch (err) {
         console.error("Load failed:", err);
+        return false;
+    }
+}
+
+export async function exportCampaign(): Promise<boolean> {
+    const dir = await open({
+        title: "Select export folder",
+        directory: true,
+    });
+
+    if (!dir || typeof dir !== "string") return false;
+
+    try {
+        const snapshot = buildSnapshot();
+        const assetsDir = useStoryStore.getState().assetsDir;
+        await exportCampaignToFolder(snapshot, dir, assetsDir);
+        return true;
+    } catch (err) {
+        console.error("Export failed:", err);
         return false;
     }
 }

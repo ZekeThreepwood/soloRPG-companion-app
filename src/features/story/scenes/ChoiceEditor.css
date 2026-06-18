@@ -298,3 +298,30 @@
     border-color: #93c5fd;
     color: #93c5fd;
 }
+
+.choiceCheckEditor {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 8px;
+}
+
+.choiceCheckRow {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.choiceCheckGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.choiceCheckGroupGrow {
+    flex: 1;
+}

@@ -14,10 +14,12 @@ type StoryStore = {
     spells: Spell[];
     filePath: string | null;
     isDirty: boolean;
+    assetsDir: string | null;
 
     initStory: (id: string, title: string, author: string) => void;
     setStoryMeta: (title: string, author: string) => void;
     setFilePath: (path: string | null) => void;
+    setAssetsDir: (dir: string | null) => void;
     markSaved: () => void;
     loadStory: (story: Story, path: string) => void;
 
@@ -62,6 +64,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
     spells: [],
     filePath: null,
     isDirty: false,
+    assetsDir: null,
 
     initStory: (id, title, author) =>
         set({
@@ -77,12 +80,15 @@ export const useStoryStore = create<StoryStore>((set) => ({
             spells: [],
             filePath: null,
             isDirty: false,
+            assetsDir: null,
         }),
 
     setStoryMeta: (title, author) =>
         set({ storyTitle: title, storyAuthor: author, isDirty: true }),
 
     setFilePath: (path) => set({ filePath: path }),
+
+    setAssetsDir: (dir) => set({ assetsDir: dir, isDirty: true }),
 
     markSaved: () => set({ isDirty: false }),
 
@@ -100,6 +106,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
             spells: story.spells ?? [],
             filePath: path,
             isDirty: false,
+            assetsDir: story.assetsDir ?? null,
         }),
 
     addScene: (scene) =>

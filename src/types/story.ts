@@ -79,15 +79,23 @@ export type Encounter = {
     lose_scene?: string;
     flee_scene?: string;
     flee_difficulty?: number;
-    win_set_flags?: Record<string, boolean>;
-    lose_set_flags?: Record<string, boolean>;
-    flee_set_flags?: Record<string, boolean>;
     win_add_items?: string[];
+    win_remove_items?: string[];
+    win_set_flags?: Record<string, boolean>;
     win_start_quests?: string[];
     win_complete_quests?: string[];
+    win_fail_quests?: string[];
+    lose_add_items?: string[];
+    lose_remove_items?: string[];
+    lose_set_flags?: Record<string, boolean>;
     lose_start_quests?: string[];
+    lose_complete_quests?: string[];
     lose_fail_quests?: string[];
+    flee_add_items?: string[];
+    flee_remove_items?: string[];
+    flee_set_flags?: Record<string, boolean>;
     flee_start_quests?: string[];
+    flee_complete_quests?: string[];
     flee_fail_quests?: string[];
 };
 
@@ -136,4 +144,5 @@ export type Story = {
     monsters: Monster[];
     classes: CharacterClass[];
     spells: Spell[];
+    assetsDir?: string;
 };

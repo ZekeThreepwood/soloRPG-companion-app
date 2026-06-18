@@ -1,0 +1,263 @@
+.encounterEditor {
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.5);
+    overflow: hidden;
+}
+
+.encounterEditorHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: rgba(239, 68, 68, 0.08);
+    border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.encounterEditorTitle {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fca5a5;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.encounterRemoveBtn {
+    background: none;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    color: #f87171;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 10px;
+    font-family: inherit;
+    transition: background 0.12s;
+}
+
+.encounterRemoveBtn:hover { background: rgba(239, 68, 68, 0.12); }
+
+.encounterBody {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.encounterField {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.encounterFieldGrow { flex: 1; }
+
+.encounterFieldLabel {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.encounterRequired { color: #f87171; margin-left: 2px; }
+
+.encounterSelect {
+    padding: 8px 12px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+.encounterSelect:focus { border-color: #93c5fd; }
+
+.encounterSelectMid { flex: 1; }
+
+.encounterHint {
+    margin: 0;
+    font-size: 12px;
+    color: #4b5563;
+    font-style: italic;
+}
+
+.encounterOutcomeRow {
+    display: flex;
+    gap: 12px;
+}
+
+.encounterFleeRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.encounterCheckLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #d1d5db;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.encounterCheckLabel input[type="checkbox"] {
+    accent-color: #f87171;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.encounterFleeDC {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.encounterDCInput {
+    width: 60px;
+    padding: 7px 10px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+    color: #f9fafb;
+    font-size: 13px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    text-align: center;
+    outline: none;
+}
+
+.encounterDCInput:focus { border-color: #93c5fd; }
+
+/* Outcome panels */
+.encounterOutcome {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.encounterWin {
+    background: rgba(34, 197, 94, 0.05);
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
+.encounterLose {
+    background: rgba(239, 68, 68, 0.05);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.encounterFlee {
+    background: rgba(234, 179, 8, 0.05);
+    border-color: rgba(234, 179, 8, 0.2);
+}
+
+.encounterOutcomeLabel {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.encounterWin .encounterOutcomeLabel  { color: #86efac; }
+.encounterLose .encounterOutcomeLabel { color: #fca5a5; }
+.encounterFlee .encounterOutcomeLabel { color: #fde047; }
+
+.encounterOutcomeGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.encounterEffectGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.encounterFlagGroup {
+    grid-column: 1 / -1;
+}
+
+.encounterEffectLabel {
+    font-size: 11px;
+    font-weight: 600;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.encounterFlagList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.encounterFlagRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.encounterFlagKey {
+    flex: 1;
+    padding: 5px 8px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 6px;
+    color: #f9fafb;
+    font-size: 12px;
+    font-family: "SF Mono", "Fira Code", monospace;
+    outline: none;
+}
+
+.encounterFlagKey:focus { border-color: #93c5fd; }
+
+.encounterFlagValue {
+    padding: 5px 6px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 6px;
+    color: #f9fafb;
+    font-size: 12px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+.encounterFlagRemove {
+    background: none;
+    border: none;
+    color: #4b5563;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+.encounterFlagRemove:hover { color: #f87171; }
+
+.encounterFlagAdd {
+    align-self: flex-start;
+    background: none;
+    border: 1px dashed rgba(148, 163, 184, 0.3);
+    border-radius: 6px;
+    color: #6b7280;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 3px 8px;
+    font-family: inherit;
+}
+
+.encounterFlagAdd:hover {
+    border-color: #93c5fd;
+    color: #93c5fd;
+}
