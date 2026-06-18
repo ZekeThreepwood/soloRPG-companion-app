@@ -56,6 +56,11 @@
     border-color: #666;
 }
 
+.toolbarField input.invalidName {
+    border-color: #c0392b;
+    color: #ff7c7c;
+}
+
 .addSlotBtn {
     border: none;
     border-radius: 4px;

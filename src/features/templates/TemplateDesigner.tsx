@@ -15,6 +15,10 @@ const SLOT_TYPES: { type: SlotType; label: string }[] = [
     { type: "separator", label: "+ Separator" },
 ];
 
+function isValidTemplateName(name: string): boolean {
+    return /^[a-z0-9_]+$/.test(name.trim());
+}
+
 export function TemplateDesigner() {
     const store = useTemplateStore();
 
@@ -24,6 +28,16 @@ export function TemplateDesigner() {
     }
 
     async function handleSave() {
+        const name = store.templateName.trim();
+        if (!name) {
+            alert("Template name is required.");
+            return;
+        }
+        if (!isValidTemplateName(name)) {
+            alert("Template name must use only lowercase letters, digits, and underscores (e.g. portrait_left).");
+            return;
+        }
+
         if (!store.campaignPath) {
             await handlePickCampaign();
             if (!useTemplateStore.getState().campaignPath) return;
@@ -32,7 +46,7 @@ export function TemplateDesigner() {
         const layout = buildLayoutJSON(store);
         await invoke("save_template", {
             campaignPath: path,
-            templateName: store.templateName,
+            templateName: name,
             content: JSON.stringify(layout, null, 2),
         });
         useTemplateStore.setState({ isDirty: false });
@@ -42,10 +56,19 @@ export function TemplateDesigner() {
         const file = await open({
             filters: [{ name: "JSON Template", extensions: ["json"] }],
             title: "Open Template JSON",
+            multiple: false,
         });
-        if (!file) return;
-        const content = await invoke<string>("load_project", { path: file as string });
+        if (!file || typeof file !== "string") return;
+        const content = await invoke<string>("load_project", { path: file });
         store.loadFromJSON(JSON.parse(content));
+    }
+
+    function handleNew() {
+        if (store.isDirty) {
+            const ok = confirm("Discard unsaved changes and start a new template?");
+            if (!ok) return;
+        }
+        store.reset();
     }
 
     return (
@@ -59,6 +82,7 @@ export function TemplateDesigner() {
                             value={store.templateName}
                             onChange={(e) => store.setTemplateName(e.target.value)}
                             placeholder="my_template"
+                            className={!isValidTemplateName(store.templateName) && store.templateName !== "" ? "invalidName" : ""}
                         />
                     </label>
                     <label className="toolbarField">
@@ -97,6 +121,9 @@ export function TemplateDesigner() {
                 <div className="toolbarRight">
                     <button type="button" className="toolbarBtn" onClick={handlePickCampaign}>
                         {store.campaignPath ? "📁 Campaign Set" : "Set Campaign"}
+                    </button>
+                    <button type="button" className="toolbarBtn" onClick={handleNew}>
+                        New
                     </button>
                     <button type="button" className="toolbarBtn" onClick={handleLoad}>
                         Load

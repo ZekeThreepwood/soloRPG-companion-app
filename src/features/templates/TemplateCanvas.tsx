@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Stage, Layer, Rect, Text, Line, Group, Transformer } from "react-konva";
 import type Konva from "konva";
 import { useTemplateStore } from "./useTemplateStore";
@@ -16,6 +16,9 @@ const SLOT_COLORS: Record<SlotType, string> = {
 
 const SLOT_MIN_W = 8;
 const SLOT_MIN_H = 8;
+
+// Only asset and separator have pixel-meaningful resize
+const RESIZABLE_TYPES: SlotType[] = ["asset", "separator"];
 
 function slotRect(slot: TemplateSlot, canvasWidth: number): { x: number; y: number; width: number; height: number } {
     if (slot.type === "separator") {
@@ -51,6 +54,15 @@ function SlotShape({ slot, canvasWidth, isSelected, onSelect, onDragEnd, onTrans
     const trRef = useRef<Konva.Transformer>(null);
     const color = SLOT_COLORS[slot.type];
     const r = slotRect(slot, canvasWidth);
+    const canResize = RESIZABLE_TYPES.includes(slot.type);
+
+    // Imperatively attach transformer to the rect after mount/selection change
+    useEffect(() => {
+        if (isSelected && canResize && trRef.current && shapeRef.current) {
+            trRef.current.nodes([shapeRef.current]);
+            trRef.current.getLayer()?.batchDraw();
+        }
+    }, [isSelected, canResize]);
 
     return (
         <Group>
@@ -62,8 +74,8 @@ function SlotShape({ slot, canvasWidth, isSelected, onSelect, onDragEnd, onTrans
                 height={r.height * SCALE}
                 fill={color}
                 opacity={0.45}
-                stroke={color}
-                strokeWidth={1}
+                stroke={isSelected ? "#fff" : color}
+                strokeWidth={isSelected ? 2 : 1}
                 draggable
                 onClick={onSelect}
                 onTap={onSelect}
@@ -91,10 +103,9 @@ function SlotShape({ slot, canvasWidth, isSelected, onSelect, onDragEnd, onTrans
                 fill="#fff"
                 listening={false}
             />
-            {isSelected && (
+            {isSelected && canResize && (
                 <Transformer
                     ref={trRef}
-                    nodes={shapeRef.current ? [shapeRef.current] : []}
                     rotateEnabled={false}
                     keepRatio={false}
                     boundBoxFunc={(_old, newBox) => ({
