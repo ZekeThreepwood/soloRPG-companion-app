@@ -1,17 +1,10 @@
 import { save, open } from "@tauri-apps/plugin-dialog";
 import { invoke } from "@tauri-apps/api/core";
 import { useStoryStore } from "./storyStore";
-import { loadCampaign } from "./campaignLoader";
+import { loadCampaign, dirOf } from "./campaignLoader";
 import { exportCampaignToFolder } from "./campaignExporter";
 import { listTemplates } from "./templateCommands";
 import type { Story } from "../types/story";
-
-function dirOf(filePath: string): string {
-    const sep = filePath.includes("\\") ? "\\" : "/";
-    const parts = filePath.split(sep);
-    parts.pop();
-    return parts.join(sep) || "/";
-}
 
 async function applyCustomTemplates(campaignPath: string): Promise<void> {
     try {
