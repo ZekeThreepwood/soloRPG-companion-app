@@ -22,16 +22,21 @@
 }
 
 .mainLogo {
+    position: relative;
+    top: -5px;
     display: block;
     width: min(304px, 66vw);
     max-height: 320px;
     height: auto;
     object-fit: contain;
     user-select: none;
+    scale: 1;
 }
 
 .landingActions {
-    width: min(272px, 61vw);
+    position: relative;
+    top: -10px;
+    width: min(190px, 43vw);
     display: flex;
     flex-direction: column;
     align-items: center;
