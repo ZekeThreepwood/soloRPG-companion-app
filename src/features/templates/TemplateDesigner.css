@@ -56,6 +56,10 @@
     border-color: #666;
 }
 
+.toolbarFieldWide input {
+    width: 200px;
+}
+
 .toolbarField input.invalidName {
     border-color: #c0392b;
     color: #ff7c7c;
@@ -97,6 +101,13 @@
 .saveBtn.dirtyBtn {
     border-color: #e8a838;
     color: #e8a838;
+}
+
+.campaignBtn {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ── Body ─────────────────────────────────────────────────────────────── */

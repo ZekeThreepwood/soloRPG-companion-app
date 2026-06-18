@@ -19,6 +19,10 @@ function isValidTemplateName(name: string): boolean {
     return /^[a-z0-9_]+$/.test(name.trim());
 }
 
+function folderName(path: string): string {
+    return path.replace(/\\/g, "/").split("/").filter(Boolean).pop() ?? path;
+}
+
 export function TemplateDesigner() {
     const store = useTemplateStore();
 
@@ -85,6 +89,15 @@ export function TemplateDesigner() {
                             className={!isValidTemplateName(store.templateName) && store.templateName !== "" ? "invalidName" : ""}
                         />
                     </label>
+                    <label className="toolbarField toolbarFieldWide">
+                        <span>Description</span>
+                        <input
+                            type="text"
+                            value={store.description}
+                            onChange={(e) => store.setDescription(e.target.value)}
+                            placeholder="Optional description"
+                        />
+                    </label>
                     <label className="toolbarField">
                         <span>W</span>
                         <input
@@ -119,8 +132,13 @@ export function TemplateDesigner() {
                 </div>
 
                 <div className="toolbarRight">
-                    <button type="button" className="toolbarBtn" onClick={handlePickCampaign}>
-                        {store.campaignPath ? "📁 Campaign Set" : "Set Campaign"}
+                    <button
+                        type="button"
+                        className="toolbarBtn campaignBtn"
+                        onClick={handlePickCampaign}
+                        title={store.campaignPath ?? "No campaign selected"}
+                    >
+                        {store.campaignPath ? `📁 ${folderName(store.campaignPath)}` : "Set Campaign"}
                     </button>
                     <button type="button" className="toolbarBtn" onClick={handleNew}>
                         New

@@ -20,7 +20,11 @@ const SLOT_MIN_H = 8;
 // Only asset and separator have pixel-meaningful resize
 const RESIZABLE_TYPES: SlotType[] = ["asset", "separator"];
 
-function slotRect(slot: TemplateSlot, canvasWidth: number): { x: number; y: number; width: number; height: number } {
+function slotRect(
+    slot: TemplateSlot,
+    canvasWidth: number,
+    _canvasHeight: number,
+): { x: number; y: number; width: number; height: number } {
     if (slot.type === "separator") {
         const x0 = slot.x0 ?? 1;
         const x1 = slot.x1 ?? canvasWidth - 2;
@@ -31,6 +35,12 @@ function slotRect(slot: TemplateSlot, canvasWidth: number): { x: number; y: numb
     }
     if (slot.type === "menu") {
         return { x: slot.x, y: slot.y, width: 80, height: (slot.line_height ?? 12) * 3 };
+    }
+    if (slot.type === "narrative") {
+        // Approximate visual size from width_chars and line settings
+        const approxW = Math.min((slot.width_chars ?? 30) * 5, canvasWidth - slot.x);
+        const approxH = (slot.max_lines ?? 5) * (slot.line_height ?? 10);
+        return { x: slot.x, y: slot.y, width: Math.max(approxW, SLOT_MIN_W), height: Math.max(approxH, SLOT_MIN_H) };
     }
     return {
         x: slot.x,
@@ -43,20 +53,21 @@ function slotRect(slot: TemplateSlot, canvasWidth: number): { x: number; y: numb
 interface SlotShapeProps {
     slot: TemplateSlot;
     canvasWidth: number;
+    canvasHeight: number;
     isSelected: boolean;
     onSelect: () => void;
     onDragEnd: (x: number, y: number) => void;
     onTransformEnd: (width: number, height: number) => void;
 }
 
-function SlotShape({ slot, canvasWidth, isSelected, onSelect, onDragEnd, onTransformEnd }: SlotShapeProps) {
+function SlotShape({ slot, canvasWidth, canvasHeight, isSelected, onSelect, onDragEnd, onTransformEnd }: SlotShapeProps) {
     const shapeRef = useRef<Konva.Rect>(null);
     const trRef = useRef<Konva.Transformer>(null);
     const color = SLOT_COLORS[slot.type];
-    const r = slotRect(slot, canvasWidth);
+    const r = slotRect(slot, canvasWidth, canvasHeight);
     const canResize = RESIZABLE_TYPES.includes(slot.type);
 
-    // Imperatively attach transformer to the rect after mount/selection change
+    // Imperatively attach transformer after mount/selection change
     useEffect(() => {
         if (isSelected && canResize && trRef.current && shapeRef.current) {
             trRef.current.nodes([shapeRef.current]);
@@ -77,6 +88,10 @@ function SlotShape({ slot, canvasWidth, isSelected, onSelect, onDragEnd, onTrans
                 stroke={isSelected ? "#fff" : color}
                 strokeWidth={isSelected ? 2 : 1}
                 draggable
+                dragBoundFunc={(pos) => ({
+                    x: Math.max(0, Math.min(pos.x, (canvasWidth - r.width) * SCALE)),
+                    y: Math.max(0, Math.min(pos.y, (canvasHeight - r.height) * SCALE)),
+                })}
                 onClick={onSelect}
                 onTap={onSelect}
                 onDragEnd={(e) => {
@@ -108,6 +123,12 @@ function SlotShape({ slot, canvasWidth, isSelected, onSelect, onDragEnd, onTrans
                     ref={trRef}
                     rotateEnabled={false}
                     keepRatio={false}
+                    enabledAnchors={
+                        slot.type === "separator"
+                            ? ["middle-left", "middle-right"]
+                            : ["top-left", "top-right", "bottom-left", "bottom-right",
+                               "middle-left", "middle-right", "top-center", "bottom-center"]
+                    }
                     boundBoxFunc={(_old, newBox) => ({
                         ...newBox,
                         width: Math.max(SLOT_MIN_W * SCALE, newBox.width),
@@ -154,6 +175,7 @@ export function TemplateCanvas() {
                             key={slot.id}
                             slot={slot}
                             canvasWidth={width}
+                            canvasHeight={height}
                             isSelected={selectedSlotId === slot.id}
                             onSelect={() => selectSlot(slot.id)}
                             onDragEnd={(x, y) => {
@@ -167,7 +189,7 @@ export function TemplateCanvas() {
                                 if (slot.type === "asset") {
                                     updateSlot(slot.id, { width: w, height: h });
                                 } else if (slot.type === "separator") {
-                                    const r = slotRect(slot, width);
+                                    const r = slotRect(slot, width, height);
                                     updateSlot(slot.id, { x1: r.x + w });
                                 }
                             }}

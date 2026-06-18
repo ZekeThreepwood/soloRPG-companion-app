@@ -210,4 +210,16 @@ describe("reset", () => {
         useTemplateStore.getState().reset();
         expect(useTemplateStore.getState().slots).toHaveLength(0);
     });
+
+    it("preserves campaignPath so the user does not have to re-select it", () => {
+        useTemplateStore.getState().setCampaignPath("/campaigns/blackwood");
+        useTemplateStore.getState().reset();
+        expect(useTemplateStore.getState().campaignPath).toBe("/campaigns/blackwood");
+    });
+
+    it("resets isDirty to false", () => {
+        useTemplateStore.getState().addSlot("menu");
+        useTemplateStore.getState().reset();
+        expect(useTemplateStore.getState().isDirty).toBe(false);
+    });
 });

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
+import { useTemplateStore } from "./useTemplateStore";
 import { TemplateDesigner } from "./TemplateDesigner";
 import "./TemplateDesignerView.css";
 
@@ -9,6 +10,7 @@ type TemplateDesignerViewProps = {
 
 export function TemplateDesignerView({ onBack }: TemplateDesignerViewProps) {
     const didResize = useRef(false);
+    const isDirty = useTemplateStore((s) => s.isDirty);
 
     useEffect(() => {
         if (didResize.current) return;
@@ -31,13 +33,22 @@ export function TemplateDesignerView({ onBack }: TemplateDesignerViewProps) {
         expandWindow();
     }, []);
 
+    function handleBack() {
+        if (isDirty) {
+            const ok = confirm("You have unsaved changes. Leave without saving?");
+            if (!ok) return;
+        }
+        onBack();
+    }
+
     return (
         <main className="templateDesignerPage">
             <div className="templateDesignerHeader">
-                <button type="button" className="backBtn" onClick={onBack}>
+                <button type="button" className="backBtn" onClick={handleBack}>
                     ← Back
                 </button>
                 <h1 className="templateDesignerTitle">Template Editor</h1>
+                {isDirty && <span className="unsavedBadge">Unsaved</span>}
             </div>
             <div className="templateDesignerContent">
                 <TemplateDesigner />

@@ -105,7 +105,7 @@ export const useTemplateStore = create<TemplateDesignerState>()((set) => ({
         });
     },
 
-    reset: () => set({ ...INITIAL }),
+    reset: () => set((s) => ({ ...INITIAL, campaignPath: s.campaignPath })),
 
     setCampaignPath: (path) => set({ campaignPath: path }),
 }));
