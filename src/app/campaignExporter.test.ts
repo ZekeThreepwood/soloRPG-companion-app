@@ -1,7 +1,8 @@
-import { vi, describe, it, expect } from "vitest";
+import { vi, describe, it, expect, beforeEach } from "vitest";
 
 vi.mock("@tauri-apps/api/core", () => ({ invoke: vi.fn() }));
 
+import { invoke } from "@tauri-apps/api/core";
 import {
     serializeChoice,
     serializeEncounter,
@@ -12,7 +13,10 @@ import {
     buildQuestsFile,
     buildMonsterDefinitionsFile,
     buildClassesFile,
+    exportCampaignToFolder,
 } from "./campaignExporter";
+
+const mockInvoke = vi.mocked(invoke);
 import type { Choice, Encounter, Scene, Story } from "../types/story";
 
 function makeChoice(overrides: Partial<Choice> = {}): Choice {
@@ -332,5 +336,49 @@ describe("buildClassesFile", () => {
         const classes = buildClassesFile(story).character_classes as Record<string, unknown>;
         const rogueSpells = (classes["rogue"] as Record<string, unknown>).spells as unknown[];
         expect(rogueSpells).toHaveLength(0);
+    });
+});
+
+// ---------------------------------------------------------------------------
+describe("exportCampaignToFolder", () => {
+    beforeEach(() => {
+        mockInvoke.mockReset();
+        mockInvoke.mockResolvedValue(undefined);
+    });
+
+    it("calls invoke save_project for each campaign file", async () => {
+        await exportCampaignToFolder(makeStory(), "/output");
+        const calls = mockInvoke.mock.calls.map((c) => c[0]);
+        expect(calls.filter((c) => c === "save_project").length).toBeGreaterThanOrEqual(6);
+    });
+
+    it("calls copy_dir_all for assetsDir when provided", async () => {
+        await exportCampaignToFolder(makeStory(), "/output", "/my/assets");
+        const copyCall = mockInvoke.mock.calls.find((c) => c[0] === "copy_dir_all" && (c[1] as Record<string, string>).src === "/my/assets");
+        expect(copyCall).toBeDefined();
+    });
+
+    it("does not call copy_dir_all when assetsDir is null", async () => {
+        await exportCampaignToFolder(makeStory(), "/output", null);
+        const copyAssets = mockInvoke.mock.calls.find((c) => c[0] === "copy_dir_all");
+        expect(copyAssets).toBeUndefined();
+    });
+
+    it("calls copy_dir_all for templatesDir when provided", async () => {
+        await exportCampaignToFolder(makeStory(), "/output", null, "/my/templates");
+        const copyCall = mockInvoke.mock.calls.find((c) => c[0] === "copy_dir_all" && (c[1] as Record<string, string>).src === "/my/templates");
+        expect(copyCall).toBeDefined();
+    });
+
+    it("does not call copy_dir_all for templates when templatesDir is null", async () => {
+        await exportCampaignToFolder(makeStory(), "/output", null, null);
+        const copyCalls = mockInvoke.mock.calls.filter((c) => c[0] === "copy_dir_all");
+        expect(copyCalls).toHaveLength(0);
+    });
+
+    it("copies both assets and templates when both are provided", async () => {
+        await exportCampaignToFolder(makeStory(), "/output", "/my/assets", "/my/templates");
+        const copyCalls = mockInvoke.mock.calls.filter((c) => c[0] === "copy_dir_all");
+        expect(copyCalls).toHaveLength(2);
     });
 });

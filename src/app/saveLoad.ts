@@ -3,7 +3,24 @@ import { invoke } from "@tauri-apps/api/core";
 import { useStoryStore } from "./storyStore";
 import { loadCampaign } from "./campaignLoader";
 import { exportCampaignToFolder } from "./campaignExporter";
+import { listTemplates } from "./templateCommands";
 import type { Story } from "../types/story";
+
+function dirOf(filePath: string): string {
+    const sep = filePath.includes("\\") ? "\\" : "/";
+    const parts = filePath.split(sep);
+    parts.pop();
+    return parts.join(sep) || "/";
+}
+
+async function applyCustomTemplates(campaignPath: string): Promise<void> {
+    try {
+        const names = await listTemplates(campaignPath);
+        useStoryStore.getState().setCustomTemplateNames(names);
+    } catch {
+        // non-fatal — templates folder may not exist yet
+    }
+}
 
 export function slugify(text: string): string {
     return text
@@ -71,6 +88,7 @@ export async function openProject(): Promise<boolean> {
         const content = await invoke<string>("load_project", { path: selected });
         const story: Story = JSON.parse(content);
         useStoryStore.getState().loadStory(story, selected);
+        await applyCustomTemplates(dirOf(selected));
         return true;
     } catch (err) {
         console.error("Load failed:", err);
@@ -88,8 +106,9 @@ export async function exportCampaign(): Promise<boolean> {
 
     try {
         const snapshot = buildSnapshot();
-        const assetsDir = useStoryStore.getState().assetsDir;
-        await exportCampaignToFolder(snapshot, dir, assetsDir);
+        const { assetsDir, filePath } = useStoryStore.getState();
+        const templatesDir = filePath ? `${dirOf(filePath)}/templates` : null;
+        await exportCampaignToFolder(snapshot, dir, assetsDir, templatesDir);
         return true;
     } catch (err) {
         console.error("Export failed:", err);
@@ -109,6 +128,7 @@ export async function openCampaign(): Promise<boolean> {
     try {
         const story = await loadCampaign(selected);
         useStoryStore.getState().loadStory(story, selected);
+        await applyCustomTemplates(dirOf(selected));
         return true;
     } catch (err) {
         console.error("Campaign load failed:", err);

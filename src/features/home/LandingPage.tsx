@@ -8,9 +8,10 @@ import "./LandingPage.css";
 type LandingPageProps = {
     onNewStory: () => void;
     onLoadStory: () => void;
+    onOpenTemplateEditor: () => void;
 };
 
-export function LandingPage({ onNewStory, onLoadStory }: LandingPageProps) {
+export function LandingPage({ onNewStory, onLoadStory, onOpenTemplateEditor }: LandingPageProps) {
     const didResize = useRef(false);
 
     useEffect(() => {
@@ -52,7 +53,7 @@ export function LandingPage({ onNewStory, onLoadStory }: LandingPageProps) {
                         Load Story
                     </StoryButton>
 
-                    <StoryButton disabled>
+                    <StoryButton onClick={onOpenTemplateEditor}>
                         Template Editor
                     </StoryButton>
                 </div>

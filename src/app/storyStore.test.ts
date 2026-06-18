@@ -186,4 +186,30 @@ describe("loadStory", () => {
         expect(s.filePath).toBe("/path/to/story.json");
         expect(s.isDirty).toBe(false);
     });
+
+    it("resets customTemplateNames to empty on loadStory", () => {
+        useStoryStore.getState().setCustomTemplateNames(["portrait_left"]);
+        useStoryStore.getState().loadStory(
+            { id: "x", title: "X", version: "1.0", start_scene: "", scenes: [], items: [], quests: [], monsters: [], classes: [], spells: [] },
+            "/path/x.json"
+        );
+        expect(useStoryStore.getState().customTemplateNames).toEqual([]);
+    });
+});
+
+describe("customTemplateNames", () => {
+    it("starts empty", () => {
+        expect(useStoryStore.getState().customTemplateNames).toEqual([]);
+    });
+
+    it("setCustomTemplateNames stores the names", () => {
+        useStoryStore.getState().setCustomTemplateNames(["portrait_left", "minimal"]);
+        expect(useStoryStore.getState().customTemplateNames).toEqual(["portrait_left", "minimal"]);
+    });
+
+    it("initStory resets customTemplateNames", () => {
+        useStoryStore.getState().setCustomTemplateNames(["portrait_left"]);
+        useStoryStore.getState().initStory("new", "New", "");
+        expect(useStoryStore.getState().customTemplateNames).toEqual([]);
+    });
 });

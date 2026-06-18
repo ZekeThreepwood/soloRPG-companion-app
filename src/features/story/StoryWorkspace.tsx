@@ -22,7 +22,7 @@ type StoryWorkspaceProps = {
     onBackToLanding: () => void;
 };
 
-type StoryMode = "structure" | "scenes" | "items" | "quests" | "monsters" | "classes" | "spells" | "assets" | "templates";
+type StoryMode = "structure" | "scenes" | "items" | "quests" | "monsters" | "classes" | "spells" | "assets";
 
 type SideTabSize = "small" | "medium" | "long";
 
@@ -35,7 +35,6 @@ const STORY_MODES: Array<{ id: StoryMode; label: string; tabSize: SideTabSize }>
     { id: "classes", label: "Classes", tabSize: "small" },
     { id: "spells", label: "Spells", tabSize: "small" },
     { id: "assets", label: "Assets", tabSize: "small" },
-    { id: "templates", label: "Templates", tabSize: "medium" },
 ];
 
 export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
@@ -179,17 +178,6 @@ export function StoryWorkspace({ onBackToLanding }: StoryWorkspaceProps) {
                     {activeMode === "spells" && <SpellsPanel />}
 
                     {activeMode === "assets" && <AssetsPanel />}
-
-                    {activeMode === "templates" && (
-                        <>
-                            <h2>Templates</h2>
-                            <p>
-                                Templates will let you define reusable scene and choice patterns —
-                                common encounter structures, NPC dialogue frames, and branching
-                                blueprints you can drop into any story. Coming in a future release.
-                            </p>
-                        </>
-                    )}
                 </div>
             </section>
 
@@ -215,6 +203,5 @@ function getModeTitle(mode: StoryMode): string {
         case "classes":  return "Classes";
         case "spells":   return "Spells";
         case "assets": return "Assets";
-        case "templates": return "Templates";
     }
 }

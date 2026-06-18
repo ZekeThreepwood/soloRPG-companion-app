@@ -1,0 +1,73 @@
+.slotInspector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.slotInspectorEmpty {
+    color: #888;
+    font-size: 13px;
+    align-items: center;
+    justify-content: center;
+}
+
+.inspectorTitle {
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.inspectorField {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: #ddd;
+}
+
+.inspectorField span {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #aaa;
+}
+
+.inspectorField input,
+.inspectorField select {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #eee;
+    padding: 5px 8px;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.inspectorField input:focus,
+.inspectorField select:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.deleteSlotBtn {
+    margin-top: 8px;
+    background: #7a1f1f;
+    border: 1px solid #a03030;
+    border-radius: 4px;
+    color: #ff9999;
+    padding: 7px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.deleteSlotBtn:hover {
+    background: #922424;
+}

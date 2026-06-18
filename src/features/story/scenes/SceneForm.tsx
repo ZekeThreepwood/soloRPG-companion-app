@@ -2,8 +2,11 @@ import { useState } from "react";
 import { ChoiceEditor } from "./ChoiceEditor";
 import { EncounterEditor, makeEmptyEncounter } from "./EncounterEditor";
 import { AssetPickerInput } from "../../../components/ui/AssetPickerInput";
-import type { Choice, Encounter, Scene, SceneTemplate } from "../../../types/story";
+import { useStoryStore } from "../../../app/storyStore";
+import type { Choice, Encounter, Scene } from "../../../types/story";
 import "./SceneForm.css";
+
+const BUILTIN_TEMPLATES = ["location", "text_scene", "npc_chat", "item_found", "battle_intro"];
 
 type SceneFormProps = {
     initialScene?: Scene;
@@ -43,11 +46,12 @@ type FormErrors = {
 };
 
 export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: SceneFormProps) {
+    const customTemplateNames = useStoryStore((s) => s.customTemplateNames);
     const [title, setTitle] = useState(initialScene?.title ?? "");
     const [id, setId] = useState(initialScene?.id ?? "");
     const [idManuallyEdited, setIdManuallyEdited] = useState(!!initialScene);
     const [text, setText] = useState(initialScene?.text ?? "");
-    const [template, setTemplate] = useState<SceneTemplate | "">(
+    const [template, setTemplate] = useState<string>(
         initialScene?.scene_template ?? ""
     );
     const [speaker, setSpeaker] = useState(initialScene?.speaker ?? "");
@@ -163,14 +167,15 @@ export function SceneForm({ initialScene, currentSceneId, onSave, onCancel }: Sc
                             <select
                                 className="sceneFieldSelect"
                                 value={template}
-                                onChange={(e) => setTemplate(e.target.value as SceneTemplate | "")}
+                                onChange={(e) => setTemplate(e.target.value)}
                             >
                                 <option value="">— none —</option>
-                                <option value="location">location</option>
-                                <option value="text_scene">text_scene</option>
-                                <option value="npc_chat">npc_chat</option>
-                                <option value="item_found">item_found</option>
-                                <option value="battle_intro">battle_intro</option>
+                                {BUILTIN_TEMPLATES.map((t) => (
+                                    <option key={t} value={t}>{t}</option>
+                                ))}
+                                {customTemplateNames.map((t) => (
+                                    <option key={t} value={t}>★ {t}</option>
+                                ))}
                             </select>
                         </div>
                     </div>

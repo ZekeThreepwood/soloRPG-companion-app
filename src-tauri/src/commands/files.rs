@@ -73,6 +73,36 @@ pub fn read_image_base64(path: String) -> Result<String, String> {
     Ok(general_purpose::STANDARD.encode(bytes))
 }
 
+/// Writes a template JSON file to `<campaign_path>/templates/<template_name>.json`.
+#[command]
+pub fn save_template(campaign_path: String, template_name: String, content: String) -> Result<(), String> {
+    let dir = Path::new(&campaign_path).join("templates");
+    fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    let path = dir.join(format!("{}.json", template_name));
+    fs::write(&path, content).map_err(|e| e.to_string())
+}
+
+/// Returns the stem names (no .json) of all template files in `<campaign_path>/templates/`.
+#[command]
+pub fn list_templates(campaign_path: String) -> Result<Vec<String>, String> {
+    let dir = Path::new(&campaign_path).join("templates");
+    if !dir.exists() {
+        return Ok(vec![]);
+    }
+    let mut names = Vec::new();
+    for entry in fs::read_dir(&dir).map_err(|e| e.to_string())? {
+        let entry = entry.map_err(|e| e.to_string())?;
+        let path = entry.path();
+        if path.extension().and_then(|e| e.to_str()) == Some("json") {
+            if let Some(stem) = path.file_stem().and_then(|s| s.to_str()) {
+                names.push(stem.to_string());
+            }
+        }
+    }
+    names.sort();
+    Ok(names)
+}
+
 fn copy_dir_recursive(src: &Path, dest: &Path) -> std::io::Result<()> {
     if !src.exists() {
         return Ok(());

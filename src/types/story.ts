@@ -1,9 +1,4 @@
-export type SceneTemplate =
-    | "location"
-    | "item_found"
-    | "text_scene"
-    | "npc_chat"
-    | "battle_intro";
+export type SceneTemplate = string;
 
 export type Item = {
     id: string;

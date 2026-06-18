@@ -15,11 +15,13 @@ type StoryStore = {
     filePath: string | null;
     isDirty: boolean;
     assetsDir: string | null;
+    customTemplateNames: string[];
 
     initStory: (id: string, title: string, author: string) => void;
     setStoryMeta: (title: string, author: string) => void;
     setFilePath: (path: string | null) => void;
     setAssetsDir: (dir: string | null) => void;
+    setCustomTemplateNames: (names: string[]) => void;
     markSaved: () => void;
     loadStory: (story: Story, path: string) => void;
 
@@ -65,6 +67,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
     filePath: null,
     isDirty: false,
     assetsDir: null,
+    customTemplateNames: [],
 
     initStory: (id, title, author) =>
         set({
@@ -81,6 +84,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
             filePath: null,
             isDirty: false,
             assetsDir: null,
+            customTemplateNames: [],
         }),
 
     setStoryMeta: (title, author) =>
@@ -89,6 +93,8 @@ export const useStoryStore = create<StoryStore>((set) => ({
     setFilePath: (path) => set({ filePath: path }),
 
     setAssetsDir: (dir) => set({ assetsDir: dir, isDirty: true }),
+
+    setCustomTemplateNames: (names) => set({ customTemplateNames: names }),
 
     markSaved: () => set({ isDirty: false }),
 
@@ -107,6 +113,7 @@ export const useStoryStore = create<StoryStore>((set) => ({
             filePath: path,
             isDirty: false,
             assetsDir: story.assetsDir ?? null,
+            customTemplateNames: [],
         }),
 
     addScene: (scene) =>

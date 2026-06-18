@@ -1,7 +1,7 @@
 mod commands;
 
 use commands::engine::inspect_engine_root;
-use commands::files::{copy_dir_all, copy_file, list_dir_images, load_project, read_image_base64, save_project};
+use commands::files::{copy_dir_all, copy_file, list_dir_images, list_templates, load_project, read_image_base64, save_project, save_template};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -16,6 +16,8 @@ pub fn run() {
             copy_file,
             copy_dir_all,
             read_image_base64,
+            save_template,
+            list_templates,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

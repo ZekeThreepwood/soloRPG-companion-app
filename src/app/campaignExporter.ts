@@ -175,6 +175,7 @@ export async function exportCampaignToFolder(
     story: Story,
     dir: string,
     assetsDir?: string | null,
+    templatesDir?: string | null,
 ): Promise<void> {
     const base = `${dir}/${story.id}`;
     await Promise.all([
@@ -186,6 +187,9 @@ export async function exportCampaignToFolder(
         writeJson(`${base}/classes.json`, buildClassesFile(story)),
         assetsDir
             ? invoke("copy_dir_all", { src: assetsDir, dest: `${base}/assets` })
+            : Promise.resolve(),
+        templatesDir
+            ? invoke("copy_dir_all", { src: templatesDir, dest: `${base}/templates` })
             : Promise.resolve(),
     ]);
 }
